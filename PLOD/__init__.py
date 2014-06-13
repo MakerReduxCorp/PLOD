@@ -350,11 +350,12 @@ class PLOD(object):
             {age: 19, name: 'Bill' , wigs: None     , zim: None         }
         ]
         
-        Args:
-            key (var): the dictionary key that should be removed.
+        .. versionadded:: 0.0.2
+        
+        :param key:
+            The dictionary key that should be removed.
+        :returns: self
 
-        Returns:
-            self        
         '''
         result = []
         for row in self.table:
@@ -585,24 +586,46 @@ class PLOD(object):
 
 
 
-    def contains(self, attr_name, value, findAll=False, exclude=False, includeMissing=False):
-        '''Return list entries where the named attribute is a list and the value is
-        present in that list.
+    def contains(self, key, value, findAll=False, exclude=False, includeMissing=False):
+        '''Return entries that:
+        
+        * have the key
+        * key points to a list, and
+        * value is found in the list.
+
         If value is also a list itself, then the list entry is return if any of the values match.
-        If value is also a list itself and findAll=True, then all of the values must be in the
-        list.
-        if 'exclude' is True, then the entries that do NOT match the above conditions are returned.
+
+        If value is also a list itself and findAll=True, then all of the values must be in the list.
+        
+        .. versionadded:: 0.0.3b
+        
+        :param key:
+            The dictionary key that should point to a list.
+        :param value:
+            The value to locate in the list. This argument can be an immutable value
+            such as a string, tuple, or number.
+
+            If this argument is a list of values instead, then this method will search for any of the values in that list. If the optional 'findAll' parameter is set to True, then all of the values in that list must be found. 
+            
+        Optional named arguments:
+        
+        :param finalAll: x
+        :param exclude: if 'exclude' is True, then the entries that do NOT match the above conditions are returned.
+
+        :param includeMissing: x
+        :returns: self
+
         '''
         result = []
         result_index = []
         counter = 0
         for row in self.table:
             d = self._get_true_dict(row)
-            if attr_name in d:
+            if key in d:
                 if findAll:
-                    success = self._list_match_all(d[attr_name], value)
+                    success = self._list_match_all(d[key], value)
                 else:
-                    success = self._list_match_any(d[attr_name], value)
+                    success = self._list_match_any(d[key], value)
                 if exclude:
                     success = not success
                 if success:
@@ -612,7 +635,7 @@ class PLOD(object):
                     # item missing from list, so skip over
                     pass
             else:
-                # if attr_name key doesn't exist, then it is the same as an empty list
+                # if key key doesn't exist, then it is the same as an empty list
                 if includeMissing:
                     result.append(row)
                     result_index.append(self.index_track[counter])
