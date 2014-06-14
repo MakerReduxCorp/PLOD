@@ -2,15 +2,7 @@
 #
 # Pythonic List of Dictionary module/class (PLOD)
 #
-# contained here is an assortment of routines useful when dealing with a list
-# of either dictionaries or classes.
-# It creates, in a certain sense, database-like routines for in-memory use.
-#
-# Generally, the class is passed a list of dictionaries. Various methods
-#   can be subsequentially applied to that class. The, finally, one of those
-#   methods is used to generate useful results. PLOD().returnList simply
-#   returns the resulting list of dictionaries.
-#
+# Version 0.0.4working
 
 # TODO: procedures: replace, update
 # TODO: add_column
@@ -20,6 +12,8 @@
 #   support for lists-treated-as-dictionaries in where key=index.
 
 # TODO: _modify_member only tested on Mongo db
+
+# TODO: support for 'code correct' returnString()
     
 import types as typemod
 try:
@@ -27,6 +21,63 @@ try:
     bson_available = True
 except ImportError:
     bson_available = False
+
+def convert_to_dict(item):
+    '''Examine an item of any type and return a true dictionary.
+
+    If it is already is a dictionary, then the item is returned as-is. Easy.
+
+    Otherwise, it attempts to interpret it. So far, this routine can handle:
+    
+    * a class, function, or anything with a .__dict__ entry
+    * a mongoEngine document (a class for MongoDb handling)
+    * a list (index positions are used as keys)
+
+    .. versionadded:: 0.0.4
+
+    :param item:
+        Any object such as a variable, instance, or function.
+    :returns:
+        A true dictionary. If unable to get convert 'item', then an empty dictionary '{}' is returned.
+    '''
+    # get type
+    actual_type = _detect_type(item)
+    # given the type, do conversion
+    if actual_type=="dict":
+        return item
+    elif actual_type=="list":
+        temp = {}
+        ctr = 0
+        for entry in item:
+            temp[ctr]=entry
+            ctr += 1
+        return temp
+    elif actual_type=="mongoengine":
+        return item.__dict__['_data']
+    elif actual_type=="class":
+        return item.__dict__
+    return {}
+
+def _detect_type(item):
+    # possible return values:
+    # 'dict', 'list', 'mongoengine', 'class'
+    # or 'unknown'
+    if type(item) is typemod.DictType:
+        return "dict"
+    if type(item) is typemod.ListType:
+        return "list"
+    try:
+        temp = item.__dict__
+    except AttributeError:
+        return "unknown"
+    if '_data' in temp:
+        try:
+            if "mongoengine.base" in str(item.__metaclass__):
+                return "mongoengine"
+        except:
+            pass
+    return "class"
+
 
 class PLOD(object):
     '''
@@ -117,74 +168,53 @@ class PLOD(object):
             self.index_track.append(i)
         return None
 
-    def _detect_type(self, row):
-        if type(row) is typemod.DictType:
-            return "dict"
-        if type(row) is typemod.ListType:
-            return "list"
-        try:
-            temp = row.__dict__
-        except AttributeError:
-            return "unknown"
-        if '_data' in temp:
-            try:
-                if "mongoengine.base" in str(row.__metaclass__):
-                    return "mongoengine"
-            except:
-                pass
-        return "class"
-
-    def _get_true_dict(self, row):
-        '''Returns a list entry as a true dictionary.
-
-        If it already is a dictionary, then it simply returns the entry as-is. Easy.
-        Otherwise, it attempts to interpret it. So far, this routine can handle:
-           a class with a .__dict__ entry
-           a mongoEngine document (a class for MongoDb handling)
-           another list (index position used as key)
-
-        Args:
-            row (var): A list entry from the list-of-dictionaries.
-
-        Returns:
-            dict: A true dictionary (empty if unable to interpret row).
-
+    def _dict_crawl(self, entry, key):
+        ''' returns a triple tuple representing the location of the key/key-list.
+        returns: (parent_dictionary, final_key, value_found)
+        If unable to locate the key, then (None, None, None) is returned.
         '''
-        actual_type = self._detect_type(row)
-        if actual_type=="dict":
-            return row
-        elif actual_type=="list":
-            temp = {}
-            ctr = 0
-            for entry in row:
-                temp[ctr]=entry
-                ctr += 1
-            return temp
-        elif actual_type=="mongoengine":
-            return row.__dict__['_data']
-        elif actual_type=="class":
-            return row.__dict__
-        return {}
-
-    def _modify_member(self, row, attr_name, value):
-        ''' properly modifies a dict or class attribute '''
-        new_row = row
-        actual_type = self._detect_type(row)
-        if actual_type=="mongoengine":
-            new_row.__dict__['_data'][attr_name] = value
+        value = None
+        if type(key) is typemod.ListType:
+            key_list = key
         else:
-            new_row[attr_name] = value
-        return new_row
+            key_list = [key]
+        try:
+            result = None
+            success_flag = True
+            temp = entry
+            for next_key in key_list:
+                parent = temp
+                actual_type = _detect_type(temp)
+                print "temp", repr(temp), actual_type
+                if actual_type=="mongoengine":
+                    temp = temp.__dict__['_data'][next_key]
+                elif actual_type=="class":
+                    temp = temp.__dict__[next_key]
+                elif actual_type=="dict":
+                    temp = temp[next_key]
+                elif actual_type=="list":
+                    temp = temp[next_key]
+                else:
+                    success_flag = False
+            if success_flag:
+                return (parent, key_list[-1], temp)
+            return (None, None, None)
+        except:
+            pass
+        return (None, None, None)
 
-    def _remove_member(self, row, attr_name):
+    def _modify_member(self, row, key, value):
         ''' properly modifies a dict or class attribute '''
-        actual_type = self._detect_type(row)
-        if actual_type=="mongoengine":
-            if attr_name in row.__dict__['_data']:
-                del row.__dict__['_data'][attr_name]
-        else:
-            if attr_name in row:
-                del row[attr_name]
+        (target, tkey, tvalue) = self._dict_crawl(row, key)
+        if target:
+            target[tkey] = value
+        return row
+
+    def _remove_member(self, row, key):
+        ''' properly modifies a dict or class attribute '''
+        (target, tkey, tvalue) = self._dict_crawl(row, key)
+        if target:
+            del target[tkey]
         return row
 
     def _do_op(self, field, op, value):
@@ -229,7 +259,7 @@ class PLOD(object):
         '''
         counter = 0
         for row in self.table:
-            dict_row = self._get_true_dict(row)
+            dict_row = convert_to_dict(row)
             if self._do_op(dict_row.get(field_name, None), op, value):
                 return counter
             counter += 1
@@ -241,11 +271,11 @@ class PLOD(object):
         Returns the value found in the field_name attribute of the row dictionary.
         '''
         result = None
-        dict_row = self._get_true_dict(row)
+        dict_row = convert_to_dict(row)
         if type(field_name) is typemod.ListType:
             temp = row
             for field in field_name:
-                dict_temp = self._get_true_dict(temp)
+                dict_temp = convert_to_dict(temp)
                 temp = dict_temp.get(field, None)
             result = temp
         else:
@@ -275,7 +305,7 @@ class PLOD(object):
         result_index = []
         counter = 0
         for row in self.table:
-            if self._detect_fields(field_name, self._get_true_dict(row)):
+            if self._detect_fields(field_name, convert_to_dict(row)):
                 final_value = self._get_value(row, field_name)
                 if self._do_op(final_value, op, value):
                     result.append(row)
@@ -290,10 +320,6 @@ class PLOD(object):
         return
 
     def _is_first_lessor(self, row_one, row_two, key_field, none_greater=False, reverse=False):
-        #dict_row_one = self._get_true_dict(row_one)
-        #dict_row_two = self._get_true_dict(row_two)
-        # missing_one_flag = not (key_field in dict_row_one)
-        # missing_two_flag = not (key_field in dict_row_two)
         missing_one_flag = not (self._get_value(row_one, key_field))
         missing_two_flag = not (self._get_value(row_two, key_field))
         if missing_one_flag:
@@ -313,10 +339,8 @@ class PLOD(object):
                     # algorithm "stable". that is, it only sorts values if a
                     # difference is seen, otherwise original order is left
                     # intact. (a reversed '<=' is a '>')
-                    # result = (dict_row_one[key_field] <= dict_row_two[key_field])
                     result = (self._get_value(row_one, key_field) <= self._get_value(row_two, key_field))
                 else:
-                    #result = (dict_row_one[key_field] < dict_row_two[key_field])
                     result = (self._get_value(row_one, key_field) < self._get_value(row_two, key_field))
         if reverse:
             result = not result
@@ -326,11 +350,15 @@ class PLOD(object):
     # Attribute Modifications
     ############################
 
-    def dropAttribute(self, key):
+    def dropKey(self, key):
         '''Drop an attribute/element/key-value pair from all the dictionaries.
 
         If the dictionary key does not exist in a particular dictionary, then
         that dictionary is left unchanged.
+
+        Side effect: if the key is a number and it matches a list (interpreted
+        as a dictionary), it will cause the "keys" to shift just as a list
+        would be expected to.
 
         Example of use:
 
@@ -438,14 +466,30 @@ class PLOD(object):
     # List Sorting/Arrangement routines
     ############################
 
-    def renumber(self, target_attr_name, start=1, increment=1):
-        "Incrementally numbers the list in it's current order."
-        "The integer representing the order is placed in the dictionary attribute. If the attribute does not exist, it is added (if possible.)"
-        "The numbering, by default, starts at one and increments by one. However, this can be changed by passing 'start' and 'increment' values."
+    def renumber(self, key, start=1, increment=1):
+        '''Incrementally number a key based on the current order of the list.
+
+        Please note that if an entry in the list does not have the specified
+        key, it is NOT created. The entry is, however, still counted.
+        
+        .. versionadded:: 0.0.2
+        
+        :param key:
+            The dictionary key that should receive the numbering. The previous
+            value is replaced, regardles of type or content. However, if the
+            key does not exist, it is not created. However, that entry is still
+            counted.
+        :param start:
+            Defaults to 1. The starting number to begin counting with.
+        :param increment:
+            Defaults to 1. The amount to increment by for each entry in the list.
+        :returns: self
+
+        '''
         result = []
         counter = start
         for row in self.table:
-            new_row = self._modify_member(row, target_attr_name, counter)
+            new_row = self._modify_member(row, key, counter)
             result.append(row)
             counter += increment
         self.table = result
@@ -506,7 +550,7 @@ class PLOD(object):
         result_tracker = []
         counter = 0
         for row in self.table:
-            d = self._get_true_dict(row)
+            d = convert_to_dict(row)
             if attr_name in d:
                 result.append(row)
                 result_tracker.append(self.index_track[counter])
@@ -521,7 +565,7 @@ class PLOD(object):
         result_tracker = []
         counter = 0
         for row in self.table:
-            d = self._get_true_dict(row)
+            d = convert_to_dict(row)
             if not attr_name in d:
                 result.append(row)
                 result_tracker.append(self.index_track[counter])
@@ -620,7 +664,7 @@ class PLOD(object):
         result_index = []
         counter = 0
         for row in self.table:
-            d = self._get_true_dict(row)
+            d = convert_to_dict(row)
             if key in d:
                 if findAll:
                     success = self._list_match_all(d[key], value)
@@ -671,7 +715,7 @@ class PLOD(object):
         used_table = []
         for i in range(limit):
             if len(self.table)>i:
-                used_table.append(self._get_true_dict(self.table[i]))
+                used_table.append(convert_to_dict(self.table[i]))
         # we locate all of the attributes and their lengths
         attr_width = {}
         # first pass to get the keys themselves
@@ -788,7 +832,7 @@ class PLOD(object):
         row = self.returnOneEntry(last=last)
         if not row:
             return None
-        dict_row = self._get_true_dict(row)
+        dict_row = convert_to_dict(row)
         return dict_row.get(field_name, None)
 
     def returnValueList(self, field_list, last=False):
@@ -796,7 +840,7 @@ class PLOD(object):
         row = self.returnOneEntry(last=last)
         if not row:
             return None
-        dict_row = self._get_true_dict(row)
+        dict_row = convert_to_dict(row)
         for field in field_list:
             result.append(dict_row.get(field, None))
         return result
@@ -823,28 +867,24 @@ if __name__ == "__main__":
     print "It being a module, there is no point in running me as a script."
 
     if True:
-     #print PLOD(final).returnString()
 
         my_list = [
-            {"name": "Joe",   "age": 82},
-            {"name": "Billy", "age": 22},
-            {"name": "Zam",   "age": 30},
+            {"name": "Joe",   "age": 82, "zip": {"zap": "ping"}},
+            {"name": "Billy", "age": 22, "zip": {"zap": "ping"}},
+            {"name": "Zam",   "age": 30, "zip": {"zap": "ping"}},
             {"name": "Julio", "age": 30},
-            {"name": "Bob",   "age": 19}
+            {"name": "Bob",   "age": 19, "zip": {"zap": "ping"}}
         ]
 
-        list_to_sort = []
-        for entry in my_list:
-            if entry["age"]>24:
-                list_to_sort.append(entry)
-        final = sorted(list_to_sort, key=lambda k: k['age'])
+        def foo():
+            print "hi"
+        foo.jj = 'blah'
+        # my_list.append(foo)
+
+
+        final = PLOD(my_list).renumber(["zip", "zap"]).returnList()
         print PLOD(final).returnString()
 
-        final = [e for e in sorted(my_list, key=lambda k: k['age']) if e['age']>24]
-        print PLOD(final).returnString()
-        
-        final = PLOD(my_list).gt("age", 24).sort("age").returnList()
-        print PLOD(final).returnString()
     else:
         print help(PLOD)
         print
