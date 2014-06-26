@@ -3,17 +3,6 @@
 # Pythonic List of Dictionary module/class (PLOD)
 #
 # Version 0.0.4working
-
-# TODO: procedures: replace, update
-# TODO: add_column
-
-# speculative TODO:
-#   add support for JOINS and their variants
-#   support for lists-treated-as-dictionaries in where key=index.
-
-# TODO: _modify_member only tested on Mongo db
-
-# TODO: support for 'code correct' returnString()
     
 import internal
 import types as typemod
@@ -147,9 +136,9 @@ class PLOD(object):
         .. versionadded:: 0.0.2
         
         :param key:
-            The dictionary key that should be removed.
+           The dictionary key (or cascading list of keys point to final key)
+           that should be removed.
         :returns: self
-
         '''
         result = []
         for row in self.table:
@@ -246,22 +235,96 @@ class PLOD(object):
         self.table.append(new_entry)
         return self
 
-    def deleteByIndex(self, index):
-        "Removes a single entry from the list given the index reference."
+    def deleteByOrigIndex(self, index):
+        """Removes a single entry from the list given the index reference.
+
+        The index, in this instance, is a reference to the *original* list
+        indexing as seen when the list was first inserted into PLOD.
+
+        An example:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> myPLOD = PLOD(test)
+        >>> print myPLOD.sort("name").returnString()
+        [
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     },
+            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        >>> print myPLOD.deleteByOrigIndex(0).returnString()
+        [
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     },
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+        ]
+
+        As you can see in the example, the list was sorted by 'name', which
+        placed 'Bill' as the first entry. Yet, when the deleteByOrigIndex was
+        passed a zero (for the first entry), it removed 'Jim' instead since
+        it was the original first entry.
+
+        :param index:
+           An integer representing the place of entry in the original list
+           of dictionaries.
+        :return:
+           self
+        """
         result = []
         result_tracker = []
-        counter = 0
-        for row in self.table:
-            if counter != index:
+        for counter, row in enumerate(self.table):
+            if self.index_track[counter] != index:
                 result.append(row)
                 result_tracker.append(self.index_track[counter])
-            counter += 1
         self.table = result
         self.index_track = result_tracker
         return self
 
-    def deleteByIndexList(self, indexList):
-        "Removes all the entriest from the list given the index references."
+    def deleteByOrigIndexList(self, indexList):
+        """Remove entries from the list given the index references.
+
+        The index, in this instance, is a reference to the *original* list
+        indexing as seen when the list was first inserted into PLOD.
+
+        An example:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> myPLOD = PLOD(test)
+        >>> print myPLOD.sort("name").returnString()
+        [
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     },
+            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        >>> listA = [0, 1]
+        >>> print myPLOD.deleteByOrigIndexList(listA).returnString()
+        [
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+        ]
+
+        As you can see in the example, the list was sorted by 'name', which
+        rearranged the entries. Yet, when the deleteByOrigIndexList was
+        passed a [0, 1] (for the first and second entries), it removed 'Jim'
+        and "Larry" since those were the original first and second entries.
+
+        :param indexList:
+           A list of integer representing the places of entry in the original
+           list of dictionaries.
+        :return:
+           self
+        """
         result = []
         result_tracker = []
         counter = 0
@@ -305,16 +368,15 @@ class PLOD(object):
         .. versionadded:: 0.0.2
         
         :param key:
-            The dictionary key that should receive the numbering. The previous
-            value is replaced, regardles of type or content. However, if the
-            key does not exist, it is not created. However, that entry is still
-            counted.
+            The dictionary key (or cascading list of keys) that should receive
+            the numbering. The previous value is replaced, regardles of type
+            or content. However, if the key does not exist, it is not created.
+            However, that entry is still counted.
         :param start:
             Defaults to 1. The starting number to begin counting with.
         :param increment:
             Defaults to 1. The amount to increment by for each entry in the list.
         :returns: self
-
         '''
         result = []
         counter = start
@@ -325,15 +387,48 @@ class PLOD(object):
         self.table = result
         return self
 
-    def sort(self, attr_name, reverse=False, none_greater=False):
-        "Sort the list in the order of the named attribute."
-        "If passed 'reverse=True', then the list is ordered in reverse."
-        "If passed 'none_greater=True', then entries missing the attribute are placed at the top of the list."
-        "  Otherwise, the entries missing the attribute (if any) are placed at the bottom of the list."
+    def sort(self, key, reverse=False, none_greater=False):
+        '''Sort the list in the order of the dictionary key.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).sort("name").returnString()
+        [
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     },
+            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        >>> print PLOD(test).sort("income").returnString()
+        [
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     },
+            {age:  3, income: 93000, name: 'Jim'  , wigs:        68}
+        ]
+        
+        .. versionadded:: 0.0.2
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           bassis of the sorting.
+        :param reverse:
+           Defaults to False. If True, then list is sorted decrementally.
+        :param none_greater:
+           Defaults to False. If True, then entries missing the key/value
+           pair are considered be of greater value than the non-missing values.
+        :returns: self
+        '''
         for i in range(0, len(self.table)):
             min = i
             for j in range(i + 1, len(self.table)):
-                if internal.is_first_lessor(self.table[j], self.table[min], attr_name, none_greater=none_greater, reverse=reverse):
+                if internal.is_first_lessor(self.table[j], self.table[min], key, none_greater=none_greater, reverse=reverse):
                     min = j
             if i!=min:
                 self.table[i], self.table[min] = self.table[min], self.table[i] # swap
@@ -344,66 +439,277 @@ class PLOD(object):
     # filters
     #################################
 
-    def eq(self, attr_name, value, includeMissing=False):
-        "Return list entries where named attribute is is equal (==) value."
-        (self.table, self.index_track) = internal.select(self.table, self.index_track, attr_name, self.EQUAL, value, includeMissing)
+    def eq(self, key, value, includeMissing=False):
+        '''Return entries where the key's value is of equal (==) value.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).eq("name", "Larry").returnString()
+        [
+            {age: 3, name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        >>> print PLOD(test).eq("income", 15000, includeMissing=True).returnString()
+        [
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]}
+        ]
+        
+        .. versionadded:: 0.0.1
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           basis of comparison.
+        :param value:
+           The value to compare with.
+        :param includeMissing:
+           Defaults to False. If True, then entries missing the key are also
+           included.
+        :returns: self
+        '''
+        (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.EQUAL, value, includeMissing)
         return self
 
-    def ne(self, attr_name, value, includeMissing=False):
-        "Return list entries where named attribute is not equal (!=) value."
-        (self.table, self.index_track) = internal.select(self.table, self.index_track, attr_name, self.NOT_EQUAL, value, includeMissing)
+    def ne(self, key, value, includeMissing=False):
+        '''Return entries where the key's value is NOT of equal (!=) value.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).ne("name", "Larry").returnString()
+        [
+            {age:  3, income: 93000, name: 'Jim' , wigs:        68},
+            {age: 20, income: 15000, name: 'Joe' , wigs: [1, 2, 3]},
+            {age: 19, income: 29000, name: 'Bill', wigs: None     }
+        ]
+        >>> print PLOD(test).ne("income", 15000, includeMissing=True).returnString()
+        [
+            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     }
+        ]
+        
+        .. versionadded:: 0.0.1
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           basis of comparison.
+        :param value:
+           The value to compare with.
+        :param includeMissing:
+           Defaults to False. If True, then entries missing the key are also
+           included.
+        :returns: self
+        '''
+        (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.NOT_EQUAL, value, includeMissing)
         return self
 
-    def gt(self, attr_name, value, includeMissing=False):
-        "Return list entries where named attribute is greater-than (>) value."
-        (self.table, self.index_track) = internal.select(self.table, self.index_track, attr_name, self.GREATER, value, includeMissing)
+    def gt(self, key, value, includeMissing=False):
+        '''Return entries where the key's value is greater (>).
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).gt("age", 19).returnString()
+        [
+            {age: 20, income: 15000, name: 'Joe', wigs: [1, 2, 3]}
+        ]
+        
+        .. versionadded:: 0.0.1
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           basis of comparison.
+        :param value:
+           The value to compare with.
+        :param includeMissing:
+           Defaults to False. If True, then entries missing the key are also
+           included.
+        :returns: self
+        '''
+        (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.GREATER, value, includeMissing)
         return self
 
-    def gte(self, attr_name, value, includeMissing=False):
-        "Return list entries where named attribute is greater-than-or-equal (=>) value."
-        (self.table, self.index_track) = internal.select(self.table, self.index_track, attr_name, self.GREATERorEQUAL, value, includeMissing)
+    def gte(self, key, value, includeMissing=False):
+        '''Return entries where the key's value is greater or equal (>=).
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).gte("age", 19).returnString()
+        [
+            {age: 20, income: 15000, name: 'Joe' , wigs: [1, 2, 3]},
+            {age: 19, income: 29000, name: 'Bill', wigs: None     }
+        ]
+        
+        .. versionadded:: 0.0.1
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           basis of comparison.
+        :param value:
+           The value to compare with.
+        :param includeMissing:
+           Defaults to False. If True, then entries missing the key are also
+           included.
+        :returns: self
+        '''
+        (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.GREATERorEQUAL, value, includeMissing)
         return self
 
-    def lt(self, attr_name, value, includeMissing=False):
-        "Return list entries where named attribute is less than (<) value."
-        (self.table, self.index_track) = internal.select(self.table, self.index_track, field_name, self.LESS, value, includeMissing)
+    def lt(self, key, value, includeMissing=False):
+        '''Return entries where the key's value is less (<).
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).lt("age", 19).returnString()
+        [
+            {age: 3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        
+        .. versionadded:: 0.0.1
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           basis of comparison.
+        :param value:
+           The value to compare with.
+        :param includeMissing:
+           Defaults to False. If True, then entries missing the key are also
+           included.
+        :returns: self
+        '''
+        (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.LESS, value, includeMissing)
         return self
 
-    def lte(self, attr_name, value, includeMissing=False):
-        "Return list entries where named attribute is less-than-or-equal (=<) value."
-        (self.table, self.index_track) = internal.select(self.table, self.index_track, field_name, self.LESSorEQUAL, value, includeMissing)
+    def lte(self, key, value, includeMissing=False):
+        '''Return entries where the key's value is less or equal (=<).
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).lte("age", 19).returnString()
+        [
+            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     }
+        ]
+        
+        .. versionadded:: 0.0.1
+        
+        :param key:
+           The dictionary key (or cascading list of keys) that should be the
+           basis of comparison.
+        :param value:
+           The value to compare with.
+        :param includeMissing:
+           Defaults to False. If True, then entries missing the key are also
+           included.
+        :returns: self
+        '''
+        (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.LESSorEQUAL, value, includeMissing)
         return self
 
-    def hasKey(self, attr_name):
-        "Return list entries where named attribute(key) is present."
+    def hasKey(self, key):
+        '''Return entries where the key is present.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).hasKey("income").returnString()
+        [
+            {age:  3, income: 93000, name: 'Jim' , wigs:        68},
+            {age: 20, income: 15000, name: 'Joe' , wigs: [1, 2, 3]},
+            {age: 19, income: 29000, name: 'Bill', wigs: None     }
+        ]
+        
+        .. versionadded:: 0.0.2
+        
+        :param key:
+           The dictionary key (or cascading list of keys) to locate.
+        :returns: self
+        '''
         result = []
         result_tracker = []
-        counter = 0
-        for row in self.table:
-            d = internal.convert_to_dict(row)
-            if attr_name in d:
+
+        for counter, row in enumerate(self.table):
+            (target, _, _) = internal.dict_crawl(row, key)
+            if target:
                 result.append(row)
                 result_tracker.append(self.index_track[counter])
-            counter += 1
         self.table = result
         self.index_track = result_tracker
         return self
 
-    def missingKey(self, attr_name):
-        "Return list entries where named attribute(key) is not present."
+    def missingKey(self, key):
+        '''Return entries where the key is NOT present.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).missingKey("income").returnString()
+        [
+            {age: 3, name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        
+        .. versionadded:: 0.0.2
+        
+        :param key:
+           The dictionary key (or cascading list of keys) to locate.
+        :returns: self
+        '''
         result = []
         result_tracker = []
-        counter = 0
-        for row in self.table:
-            d = internal.convert_to_dict(row)
-            if not attr_name in d:
+        for counter, row in enumerate(self.table):
+            (target, _, _) = internal.dict_crawl(row, key)
+            if not target:
                 result.append(row)
                 result_tracker.append(self.index_track[counter])
-            counter += 1
         self.table = result
         self.index_track = result_tracker
         return self
-
 
     def contains(self, key, value, findAll=False, exclude=False, includeMissing=False):
         '''Return entries that:
@@ -412,39 +718,59 @@ class PLOD(object):
         * key points to a list, and
         * value is found in the list.
 
-        If value is also a list itself, then the list entry is return if any of the values match.
+        If value is also a list itself, then the list entry is selected if any of
+        the values match.  If findAll is set to True, then all the entries
+        must be found.
 
-        If value is also a list itself and findAll=True, then all of the values must be in the list.
-        
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": [9, 12]  },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).contains("wigs", [1, 12]).returnString()
+        [
+            {age:  3, income: 93000, name: 'Jim', wigs: [9, 12]  },
+            {age: 20, income: 15000, name: 'Joe', wigs: [1, 2, 3]}
+        ]
+
         .. versionadded:: 0.0.3b
         
         :param key:
-            The dictionary key that should point to a list.
+           The dictionary key (or cascading list of keys) that should point to
+           a list.
         :param value:
-            The value to locate in the list. This argument can be an immutable value
-            such as a string, tuple, or number.
+           The value to locate in the list. This argument can be an immutable
+           value such as a string, tuple, or number.
 
-            If this argument is a list of values instead, then this method will search for any of the values in that list. If the optional 'findAll' parameter is set to True, then all of the values in that list must be found. 
+           If this argument is a list of values instead, then this method will
+           search for any of the values in that list. If the optional 'findAll'
+           parameter is set to True, then all of the values in that list must
+           be found. 
             
         Optional named arguments:
         
-        :param finalAll: x
-        :param exclude: if 'exclude' is True, then the entries that do NOT match the above conditions are returned.
-
-        :param includeMissing: x
-        :returns: self
-
+        :param finalAll:
+           If True, then all the values in the 'value' parameter must be found.
+        :param exclude:
+           If 'exclude' is True, then the entries that do NOT match the above
+           conditions are returned.
+        :param includeMissing:
+           x
+        :returns:
+           self
         '''
         result = []
         result_index = []
-        counter = 0
-        for row in self.table:
-            d = internal.convert_to_dict(row)
-            if key in d:
+        for counter, row in enumerate(self.table):
+            (target, tkey, target_list) = internal.dict_crawl(row, key)
+            if target:
                 if findAll:
-                    success = internal.list_match_all(d[key], value)
+                    success = internal.list_match_all(target_list, value)
                 else:
-                    success = internal.list_match_any(d[key], value)
+                    success = internal.list_match_any(target_list, value)
                 if exclude:
                     success = not success
                 if success:
@@ -460,7 +786,6 @@ class PLOD(object):
                     result_index.append(self.index_track[counter])
                 else:
                     pass
-            counter += 1
         self.table = result
         self.index_track = result_index
         return self
@@ -472,7 +797,32 @@ class PLOD(object):
     ##############################
 
     def returnList(self, limit=False):
-        "Return a list of dictionaries."
+        '''Return a true list of dictionaries (and *not* PLOD class).
+
+        The list returned maintains the 'types' of the original entries unless
+        another operation has explicity change them. For example, an 'upsert'
+        replacement of an entry.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": [9, 12]  },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> my_list = PLOD(test).sort("age").returnList()
+        >>> print my_list
+        [{'age': 3, 'name': 'Jim', 'wigs': [9, 12], 'income': 93000}, {'age': 3, 'name': 'Larry', 'wigs': [3, 2, 9]}, {'age': 19, 'name': 'Bill', 'income': 29000}, {'age': 20, 'name': 'Joe', 'wigs': [1, 2, 3], 'income': 15000}]
+        >>> print my_list[2]["age"]
+        19
+
+        :param limit:
+           A number limiting the quantity of entries to return. Defaults to
+           False, which means that the full list is returned.
+        :return:
+           the list of dictionaries
+        '''
         if limit==False:
             return self.table
         result = []
@@ -489,6 +839,8 @@ class PLOD(object):
         as to have them all line up vertically if using a monospace font. The
         fields are normalized to alphabetical order. Missing keys in a
         dictionary are inserted with a value of 'None'.
+
+        Example of use:
 
         >>> test = [
         ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
@@ -683,20 +1035,14 @@ if __name__ == "__main__":
     if False:
 
         my_list = [
-            {"name": "Joe",   "age": 82, "zip": {"zap": "ping"}},
-            {"name": "Billy", "age": 22, "zip": {"zap": "ping"}},
-            {"name": "Zam",   "age": 30, "zip": {"zap": "ping"}},
+            {"name": "Joe",   "age": 82, "zip": {"zap": [0,2,65]}},
+            {"name": "Billy", "age": 22, "zip": {"zap": 65}},
+            {"name": "Zam",   "age": 30, "zip": {"zap": [0,2,4]}},
             {"name": "Julio", "age": 30},
-            {"name": "Bob",   "age": 19, "zip": {"zap": "ping"}}
+            {"name": "Bob",   "age": 19, "zip": {"zap": "ABabping"}}
         ]
 
-        def foo():
-            print "hi"
-        foo.jj = 'blah'
-        # my_list.append(foo)
-
-
-        final = PLOD(my_list).renumber(["zip", "zap"]).returnList()
+        final = PLOD(my_list).contains(["zip", "zap"], 65).returnList()
         print PLOD(final).returnString()
 
     else:
@@ -710,8 +1056,22 @@ if __name__ == "__main__":
         print doctest.run_docstring_examples(PLOD.dropKey, None)
         print doctest.run_docstring_examples(PLOD.upsert, None)
         print doctest.run_docstring_examples(PLOD.insert, None)
+        print doctest.run_docstring_examples(PLOD.deleteByOrigIndex, None)
+        print doctest.run_docstring_examples(PLOD.deleteByOrigIndexList, None)
         # list arrangement
         print doctest.run_docstring_examples(PLOD.renumber, None)
+        print doctest.run_docstring_examples(PLOD.sort, None)
+        # list filters
+        print doctest.run_docstring_examples(PLOD.eq, None)
+        print doctest.run_docstring_examples(PLOD.ne, None)
+        print doctest.run_docstring_examples(PLOD.gt, None)
+        print doctest.run_docstring_examples(PLOD.gte, None)
+        print doctest.run_docstring_examples(PLOD.lt, None)
+        print doctest.run_docstring_examples(PLOD.lte, None)
+        print doctest.run_docstring_examples(PLOD.hasKey, None)
+        print doctest.run_docstring_examples(PLOD.missingKey, None)
+        print doctest.run_docstring_examples(PLOD.contains, None)
         # list return results
+        print doctest.run_docstring_examples(PLOD.returnList, None)
         print doctest.run_docstring_examples(PLOD.returnString, None)
         print "Tests done."
