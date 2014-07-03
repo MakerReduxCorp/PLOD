@@ -758,7 +758,10 @@ class PLOD(object):
            If 'exclude' is True, then the entries that do NOT match the above
            conditions are returned.
         :param includeMissing:
-           x
+           If 'includeMissing' is True, then if the key is missing then that
+           entry is included in the results. However, it does not include
+           entries that have the key but its value is for a non-list or empty
+           list.
         :returns:
            self
         '''
@@ -780,7 +783,6 @@ class PLOD(object):
                     # item missing from list, so skip over
                     pass
             else:
-                # if key key doesn't exist, then it is the same as an empty list
                 if includeMissing:
                     result.append(row)
                     result_index.append(self.index_track[counter])
@@ -797,7 +799,7 @@ class PLOD(object):
     ##############################
 
     def returnList(self, limit=False):
-        '''Return a true list of dictionaries (and *not* PLOD class).
+        '''Return a true list of dictionaries (and *not* a PLOD class).
 
         The list returned maintains the 'types' of the original entries unless
         another operation has explicity change them. For example, an 'upsert'
@@ -931,9 +933,71 @@ class PLOD(object):
             result += "]"
         return result
 
-    def returnCSV(self, limit=False, omitHeaderLine=False):
-        '''Return a list of dictionaries formated as a comma seperated values (CSV) list
-        as a string.'''
+    def returnCSV(self, limit=False, omitHeaderLine=False, quoteChar=None, quoteAll=False, keys=None):
+        '''Return a list of dictionaries formated as a comma seperated values
+        (CSV) list in a string.
+
+        Each entry is on one line. By default, each value is seperated by
+        commas and each entry is followed by a newline ('\n').
+
+        By default, the pythonic *repr* method is used for display.
+        Missing keys and/or values of None are simply blank.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",          "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry",        "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",          "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill O'Brien", "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).returnCSV()
+        age,order,name,income
+        3,2,'Jim',93000
+        3,3,'Larry',
+        20,1,'Joe',15000
+        19,4,"Bill O'Brien",29000
+        <BLANKLINE>
+        >>> print PLOD(test).returnCSV(limit=3, omitHeaderLine=True, quoteAll=True)
+        '3','2','Jim','93000'
+        '3','3','Larry',''
+        '20','1','Joe','15000'
+        <BLANKLINE>
+        >>> print PLOD(test).returnCSV(keys=["name", "age"], quoteChar='"')
+        "name","age"
+        "Jim","3"
+        "Larry","3"
+        "Joe","20"
+        "Bill O'Brien","19"
+        <BLANKLINE>
+        
+        :param keys:
+           If the 'keys' parameter is passed a list of keys, then only those
+           keys are returned. The order of keys in the list is retained. If a
+           key is not found in an entry (or in *any* entry), that is not an error
+           condition. Those entries simply have an empty value for that position.
+
+           NOTE: use this parameter if the order of the keys is critical. Order
+           is not guaranteed otherwise.
+        :param limit:
+           A number limiting the quantity of entries to return. Defaults to
+           False, which means that the full list is returned.
+        :param omitHeaderLine:
+           If set to True, the initial line of text listing the keys
+           is not included. Defaults to False.
+        :param quoteAll:
+           If set to True, all values, including missing or empty ones, are
+           surrounded by quotes.
+        :param quoteChar:
+           If set to anything (including a single quote), then all fields will
+           be surrounded by the quote character. In essense, changing the
+           quoteChar also invokes quoteAll.
+        '''
+        result = ""
+        if quoteChar:
+            quoteAll=True
+        else:
+            quoteChar="'"
         # we limit the table if needed
         used_table = self.table
         if limit:
@@ -942,22 +1006,37 @@ class PLOD(object):
                 if len(self.table)>i:
                     used_table.append(self.table[i])
         # we locate all of the attributes
-        attr_list = []
-        for row in used_table:
-            for key in row:
-                if not key in attr_list:
-                    attr_list.append(key)
+        if keys:
+            attr_list = keys
+        else:
+            attr_list = []
+            for row in used_table:
+                for key in row:
+                    if not key in attr_list:
+                        attr_list.append(key)
         # now we do the pretty print
         if not omitHeaderLine:
-            result = ",".join(attr_list)
+            if quoteAll or (quoteChar != "'"):
+                result += quoteChar
+                temp = quoteChar+","+quoteChar
+                result += temp.join(attr_list)
+                result += quoteChar
+            else:
+                result += ",".join(attr_list)
             result += "\n"
         for row in used_table:
             ml = []
             for key in attr_list:
                 if key in row:
-                    ml.append(repr(row[key]))
+                    if quoteAll:
+                        ml.append(quoteChar+str(row[key]).encode('unicode_escape').replace(quoteChar, '\\'+quoteChar)+quoteChar)
+                    else:
+                        ml.append(repr(row[key]))
                 else:
-                    ml.append("")
+                    if quoteAll:
+                        ml.append(quoteChar+quoteChar)
+                    else:
+                        ml.append("")
             result += ",".join(ml)
             result += "\n"
         return result
@@ -1074,4 +1153,5 @@ if __name__ == "__main__":
         # list return results
         print doctest.run_docstring_examples(PLOD.returnList, None)
         print doctest.run_docstring_examples(PLOD.returnString, None)
+        print doctest.run_docstring_examples(PLOD.returnCSV, None)
         print "Tests done."
