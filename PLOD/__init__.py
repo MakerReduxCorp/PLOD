@@ -2,7 +2,7 @@
 #
 # Pythonic List of Dictionary module/class (PLOD)
 #
-# Version 0.0.4working
+# Version 0.1.4working
     
 import internal
 import types as typemod
@@ -871,6 +871,9 @@ class PLOD(object):
         :param executable:
            If set to True, the string is formatted in such a way that it
            conforms to Python syntax. Defaults to False.
+        :return:
+           A string containing a formatted textual representation of the list
+           of dictionaries.
         '''
         result = ""
         # we limit the table if needed
@@ -933,7 +936,7 @@ class PLOD(object):
             result += "]"
         return result
 
-    def returnCSV(self, limit=False, omitHeaderLine=False, quoteChar=None, quoteAll=False, keys=None):
+    def returnCSV(self, keys=None, limit=False, omitHeaderLine=False, quoteChar=None, quoteAll=False):
         '''Return a list of dictionaries formated as a comma seperated values
         (CSV) list in a string.
 
@@ -992,6 +995,9 @@ class PLOD(object):
            If set to anything (including a single quote), then all fields will
            be surrounded by the quote character. In essense, changing the
            quoteChar also invokes quoteAll.
+        :return:
+           A string containing a formatted textual representation of the list
+           of dictionaries.
         '''
         result = ""
         if quoteChar:
@@ -1042,7 +1048,28 @@ class PLOD(object):
         return result
 
     def returnIndexList(self, limit=False):
-        "Return a list of integers that are list-index references to the original list of dictionaries."
+        '''Return a list of integers that are list-index references to the
+        original list of dictionaries."
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).returnIndexList()
+        [0, 1, 2, 3]
+        >>> print PLOD(test).sort("name").returnIndexList()
+        [3, 0, 2, 1]
+        
+        :param limit:
+           A number limiting the quantity of entries to return. Defaults to
+           False, which means that the full list is returned.
+        :return:
+           A list of integers representing the original indices.
+        '''
         if limit==False:
             return self.index_track
         result = []
@@ -1053,8 +1080,28 @@ class PLOD(object):
 
 
     def returnOneIndex(self, last=False):
-        "Return one integer that is a list-index reference to the original list of dictionaries."
-        "If the last=True, then the last reference is returned. Otherwise, the first reference is returned."
+        '''Return the first origin index (integer) of the current list. That
+        index refers to it's placement in the original list of dictionaries."
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).returnOneIndex()
+        0
+        >>> print PLOD(test).sort("name").returnOneIndex()
+        3
+
+        :param last:
+           The last origin of the current list is returned rather than the first.
+        :return:
+           An integer representing the original placement of the first item in
+           the list.
+        '''
         if len(self.table)==0:
             return None
         else:
@@ -1065,8 +1112,29 @@ class PLOD(object):
 
 
     def returnOneEntry(self, last=False):
-        "Return the first entry in the current list. If 'last=True', then the last entry is returned."
-        "Returns None is the list is empty."
+        '''Return the first entry in the current list. If 'last=True', then
+        the last entry is returned."
+
+        Returns None is the list is empty.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).returnOneEntry()
+        {'age': 3, 'order': 2, 'name': 'Jim', 'income': 93000}
+        >>> print PLOD(test).returnOneEntry(last=True)
+        {'age': 19, 'order': 4, 'name': 'Bill', 'income': 29000}
+
+        :param last:
+           If True, the last entry is returned rather than the first.
+        :return:
+           A list entry, or None if the list is empty.
+        '''
         if len(self.table)==0:
             return None
         else:
@@ -1075,37 +1143,140 @@ class PLOD(object):
             else:
                 return self.table[0]
 
-    def returnValue(self, field_name, last=False):
+    def returnValue(self, key, last=False):
+        '''Return the key's value for the first entry in the current list.
+        If 'last=True', then the last entry is referenced."
+
+        Returns None is the list is empty or the key is missing.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).returnValue("name")
+        Jim
+        >>> print PLOD(test).sort("name").returnValue("name", last=True)
+        Larry
+        >>> print PLOD(test).sort("name").returnValue("income", last=True)
+        None
+
+        :param last:
+           If True, the last entry is used rather than the first.
+        :return:
+           A value, or None if the list is empty or the key is missing.
+        '''
         row = self.returnOneEntry(last=last)
         if not row:
             return None
         dict_row = internal.convert_to_dict(row)
-        return dict_row.get(field_name, None)
+        return dict_row.get(key, None)
 
-    def returnValueList(self, field_list, last=False):
+    def returnValueList(self, key_list, last=False):
+        '''Return a list of key values for the first entry in the current list.
+        If 'last=True', then the last entry is referenced."
+
+        Returns None is the list is empty. If a key is missing, then
+        that entry in the list is None.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).returnValueList(["name", "income"])
+        ['Jim', 93000]
+        >>> print PLOD(test).sort("name").returnValueList(["name", "income"], last=True)
+        ['Larry', None]
+
+        :param last:
+           If True, the last entry is used rather than the first.
+        :return:
+           A value, or None if the list is empty.
+        '''
         result = []
         row = self.returnOneEntry(last=last)
         if not row:
             return None
         dict_row = internal.convert_to_dict(row)
-        for field in field_list:
+        for field in key_list:
             result.append(dict_row.get(field, None))
         return result
     
     def found(self):
-        "Return True if list has at least one item; otherwise return False."
+        '''Return True if list has at least one entry; otherwise return False.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).found()
+        True
+        >>> print PLOD(test).eq("name", "Simon").found()
+        False
+
+        :return:
+           True if list has at least one entry, else False.
+        '''
         if len(self.table)==0:
             return False
         return True
 
     def missing(self):
-        "Return True if list is empty; otherwise return False."
+        '''Return True if list is empty; otherwise return False.
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).missing()
+        False
+        >>> if PLOD(test).eq("name", "Simon").missing():
+        ...    print "Simon not found"
+        Simon not found
+
+        :return:
+           False if list has one ore more entries, else True.
+        '''
         if len(self.table)==0:
             return True
         return False
 
     def count(self):
-        "Return an integer representing the number of items in the list."
+        '''Return an integer representing the number of items in the list.
+
+        It is the equivalent to:
+
+            len(PLOD(list).returnList())
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
+        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ... ]
+        >>> print PLOD(test).gte("age", 19).count()
+        2
+
+        :return:
+           Integer representing the number of items in the list.
+        '''
         return len(self.table)
 
 
@@ -1154,4 +1325,12 @@ if __name__ == "__main__":
         print doctest.run_docstring_examples(PLOD.returnList, None)
         print doctest.run_docstring_examples(PLOD.returnString, None)
         print doctest.run_docstring_examples(PLOD.returnCSV, None)
+        print doctest.run_docstring_examples(PLOD.returnIndexList, None)
+        print doctest.run_docstring_examples(PLOD.returnOneIndex, None)
+        print doctest.run_docstring_examples(PLOD.returnOneEntry, None)
+        print doctest.run_docstring_examples(PLOD.returnValue, None)
+        print doctest.run_docstring_examples(PLOD.returnValueList, None)
+        print doctest.run_docstring_examples(PLOD.found, None)
+        print doctest.run_docstring_examples(PLOD.missing, None)
+        print doctest.run_docstring_examples(PLOD.count, None)
         print "Tests done."
