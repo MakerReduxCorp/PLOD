@@ -319,3 +319,12 @@ def list_match_all(source, value):
             # non-list vs non-list, that is a simple comparison:
             success = do_op(source, EQUAL, value)
     return success
+
+def csv_quote(quote_char, s):
+    result = quote_char
+    for c in s:
+        result += c
+        if c==quote_char:
+            result += c
+    result += quote_char
+    return result

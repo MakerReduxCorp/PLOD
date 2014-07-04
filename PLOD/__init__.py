@@ -936,42 +936,54 @@ class PLOD(object):
             result += "]"
         return result
 
-    def returnCSV(self, keys=None, limit=False, omitHeaderLine=False, quoteChar=None, quoteAll=False):
-        '''Return a list of dictionaries formated as a comma seperated values
+    def returnCSV(self, keys=None, limit=False, omitHeaderLine=False, quoteChar=None, eolChars='\r\n'):
+        r'''Return a list of dictionaries formated as a comma seperated values
         (CSV) list in a string.
 
         Each entry is on one line. By default, each value is seperated by
         commas and each entry is followed by a newline ('\n').
 
-        By default, the pythonic *repr* method is used for display.
+        By default, RFC4180 is followed. See:
+
+           http://tools.ietf.org/html/rfc4180
+
+        The RFC has considerable detail describing the format.
+
+        Note regarding certain RFC section 2 sub 4: there is no default
+        behavior specified if the last field on a line is empty and thus
+        creating a 'trailing comma'. This routine handles it by quoting
+        the final field. The first example below demonstrates this for the
+        entry with 'name' of 'Larry' and a missing 'income' field. The
+        missing field is shown as "" at the end of the line.
+           
         Missing keys and/or values of None are simply blank.
 
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",          "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry",        "age": 3 ,                  "order": 3},
-        ...    {"name": "Joe",          "age": 20, "income": 15000, "order": 1},
-        ...    {"name": "Bill O'Brien", "age": 19, "income": 29000, "order": 4},
+        ...    {"name": "Jim, Phd",         "age": 3   , "income": 93000, "order": 2},
+        ...    {"name": "Larry",            "age": None,                  "order": 3},
+        ...    {"name": "Joe",              "age": 20  , "income": 15000, "order": 1},
+        ...    {"name": "B \"Zip\" O'Tool", "age": 19  , "income": 29000, "order": 4},
         ... ]
-        >>> print PLOD(test).returnCSV()
+        >>> print PLOD(test).returnCSV()   # doctest: +NORMALIZE_WHITESPACE
         age,order,name,income
-        3,2,'Jim',93000
-        3,3,'Larry',
-        20,1,'Joe',15000
-        19,4,"Bill O'Brien",29000
+        3,2,"Jim, Phd",93000
+        ,3,Larry,""
+        20,1,Joe,15000
+        19,4,"B ""Zip"" O'Tool",29000
         <BLANKLINE>
-        >>> print PLOD(test).returnCSV(limit=3, omitHeaderLine=True, quoteAll=True)
-        '3','2','Jim','93000'
-        '3','3','Larry',''
+        >>> print PLOD(test).returnCSV(limit=3, omitHeaderLine=True, quoteChar="'", eolChars='\n')
+        '3','2','Jim, Phd','93000'
+        '','3','Larry',''
         '20','1','Joe','15000'
         <BLANKLINE>
-        >>> print PLOD(test).returnCSV(keys=["name", "age"], quoteChar='"')
+        >>> print PLOD(test).returnCSV(keys=["name", "age"], quoteChar='"', eolChars='\n')
         "name","age"
-        "Jim","3"
-        "Larry","3"
+        "Jim, Phd","3"
+        "Larry",""
         "Joe","20"
-        "Bill O'Brien","19"
+        "B ""Zip"" O'Tool","19"
         <BLANKLINE>
         
         :param keys:
@@ -988,13 +1000,13 @@ class PLOD(object):
         :param omitHeaderLine:
            If set to True, the initial line of text listing the keys
            is not included. Defaults to False.
-        :param quoteAll:
-           If set to True, all values, including missing or empty ones, are
-           surrounded by quotes.
         :param quoteChar:
            If set to anything (including a single quote), then all fields will
-           be surrounded by the quote character. In essense, changing the
-           quoteChar also invokes quoteAll.
+           be surrounded by the quote character.
+        :param eolChars:
+           These are the characters inserted at the end of each line. By default
+           they are CRLF ('\r\n') as specified in RFC4180. To be more pythonic
+           you could change it to '\n'.
         :return:
            A string containing a formatted textual representation of the list
            of dictionaries.
@@ -1003,7 +1015,7 @@ class PLOD(object):
         if quoteChar:
             quoteAll=True
         else:
-            quoteChar="'"
+            quoteAll=False
         # we limit the table if needed
         used_table = self.table
         if limit:
@@ -1022,29 +1034,42 @@ class PLOD(object):
                         attr_list.append(key)
         # now we do the pretty print
         if not omitHeaderLine:
-            if quoteAll or (quoteChar != "'"):
+            if quoteAll:
                 result += quoteChar
                 temp = quoteChar+","+quoteChar
                 result += temp.join(attr_list)
                 result += quoteChar
             else:
                 result += ",".join(attr_list)
-            result += "\n"
+            result += eolChars
         for row in used_table:
             ml = []
-            for key in attr_list:
+            for ctr, key in enumerate(attr_list):
                 if key in row:
-                    if quoteAll:
-                        ml.append(quoteChar+str(row[key]).encode('unicode_escape').replace(quoteChar, '\\'+quoteChar)+quoteChar)
+                    if row[key] is None:
+                        value = ""
                     else:
-                        ml.append(repr(row[key]))
+                        value = str(row[key])
+                    if quoteAll:
+                        ml.append(internal.csv_quote(quoteChar,value))
+                    else:
+                        if ('"' in value) or (',' in value):
+                            ml.append(internal.csv_quote('"', value))
+                        else:
+                            if ((ctr+1)==len(attr_list)) and (len(value)==0):
+                                ml.append('""')
+                            else:
+                                ml.append(value)
                 else:
                     if quoteAll:
                         ml.append(quoteChar+quoteChar)
                     else:
-                        ml.append("")
+                        if (ctr+1)==len(attr_list):
+                            ml.append('""')
+                        else:
+                            ml.append("")
             result += ",".join(ml)
-            result += "\n"
+            result += eolChars
         return result
 
     def returnIndexList(self, limit=False):
