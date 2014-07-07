@@ -22,7 +22,7 @@ If it is simple enough, one could do so directly using Python. For example:
 
     abundant_fruit = [f for f in fruits if f['qty']>5]
    
-But, if the program you are writing does such manipulations regularly, and those manipulations must be somewhat more complex, then PLOD might be worth using.
+But, if the program you are writing does such manipulations regularly, and those manipulations are somewhat more complex, then PLOD might be worth using. To mimic the previous example, this time with PLOD:
 
     from PLOD import PLOD
     abundant_fruit = PLOD(fruit).gt('qty',5).returnList()
@@ -55,7 +55,7 @@ In general, one simply:
 For example, to sort a list:
 
     from PLOD import PLOD
-    my_list = PLOD(fruits).sort("quantity").returnList()
+    my_list = PLOD(fruits).sort("qty").returnList()
     
 Or, to get a string with comma-separated values with a filter:
 
