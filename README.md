@@ -62,13 +62,13 @@ Or, to get a string with comma-separated values with a filter:
     from PLOD import PLOD
     csv = PLOD(fruits).gt('qty', 1).returnCSV(keys=['name', 'sizes'])
     
-For more detailed information, please visit the [Documentation](/tbd).
+For more detailed information, please visit the [Documentation](/docs/index.html).
 
 Other Resources
 ---------------
 
 * [GitHub Repository](https://github.com/MakerReduxCorp/PLOD)
 * PyPI web site TBD
-* Documentation TBD
+* [Documentation](/docs/index.html)
 * [Early Overview Video](http://videocenter1.vtcstream.com/videos/video/3546/embed/?access_token=shr00000035466053201644252204311242298919605)
 
