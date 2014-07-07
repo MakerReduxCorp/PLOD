@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PLOD - Brief Introduction &mdash; PLOD 0.1.4working documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.4working',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PLOD 0.1.4working documentation" href="index.html" />
+    <link rel="next" title="PLOD Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Welcome to PLOD" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="PLOD Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PLOD"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PLOD 0.1.4working documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PLOD - Brief Introduction</a><ul>
+<li><a class="reference internal" href="#why-lists-of-dictionaries-why-plod">Why Lists of Dictionaries? Why PLOD?</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#how-to-use">How to Use</a></li>
+<li><a class="reference internal" href="#other-resources">Other Resources</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to PLOD</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="next chapter">PLOD Tutorial</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/readme_link.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="plod-brief-introduction">
+<h1>PLOD - Brief Introduction<a class="headerlink" href="#plod-brief-introduction" title="Permalink to this headline">¶</a></h1>
+<p><em>PLOD</em> is a simpler and easier way to manipulate lists of dictionaries. <em>PLOD</em> stands for Pythonic Lists of Dictionaries.</p>
+<div class="section" id="why-lists-of-dictionaries-why-plod">
+<h2>Why Lists of Dictionaries? Why PLOD?<a class="headerlink" href="#why-lists-of-dictionaries-why-plod" title="Permalink to this headline">¶</a></h2>
+<p>Increasingly, software is passing more complex data stores between machines and between processes. Examples include RESTful XML, JSON/MongoDB, Google protobuf, RabbitMQ, etc.</p>
+<p>These data stores can include lists of collections, and each collection can have many attributes/values. In Python, these are often internally represented as a list containing dictionaries. For example, if you needed to represent a list of fruits available for purchase:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>fruits = [</dt>
+<dd>{&#8220;name&#8221;: &#8220;bannana&#8221;, &#8220;color&#8221;: &#8220;yellow&#8221;, &#8220;qty&#8221;: 9,  &#8220;sizes&#8221;: [2, 2.4, 3]},
+{&#8220;name&#8221;: &#8220;cherry&#8221;,                     &#8220;qty&#8221;: 40, &#8220;sizes&#8221;: [3, 2, 9]},
+{&#8220;name&#8221;: &#8220;lime&#8221;,    &#8220;color&#8221;: &#8220;green&#8221;,  &#8220;qty&#8221;: 2,  &#8220;sizes&#8221;: [2]},</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<p>One could, of course, pass such a structure into a SQL database such as MySQL or PostgreSQL for manipulation. But that can be overkill for a small amount of temporary data, especially when the infrastructure requirements are light and response time is critical. In that case, manipulating such a list might make more sense to do in-memory within Python itself.</p>
+<p>If it is simple enough, one could do so directly using Python. For example:</p>
+<blockquote>
+<div>abundant_fruit = [f for f in fruits if f[&#8216;qty&#8217;]&gt;5]</div></blockquote>
+<p>But, if the program you are writing does such manipulations regularly, and those manipulations are somewhat more complex, then PLOD might be worth using. To mimic the previous example, this time with PLOD:</p>
+<blockquote>
+<div>from PLOD import PLOD
+abundant_fruit = PLOD(fruit).gt(&#8216;qty&#8217;,5).returnList()</div></blockquote>
+<p>Or a more complex example:</p>
+<blockquote>
+<div>from PLOD import PLOD
+my_fruit = PLOD(fruit).sort(&#8220;color&#8221;).contains(&#8220;sizes&#8221;, [3]).renumber(&#8220;id&#8221;, insert=True).returnList()</div></blockquote>
+<p>Here the list is sorted by color (missing colors at the top), filtered to entries with a size 3, and renumbered with a new key called &#8220;id&#8221;.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><em>PLOD</em> is not yet available on PyPI, but when it does become available:</p>
+<p>Install _PLOD_ using pip:</p>
+<blockquote>
+<div>pip install PLOD</div></blockquote>
+</div>
+<div class="section" id="how-to-use">
+<h2>How to Use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<p>In general, one simply:</p>
+<ol class="arabic simple">
+<li>Creates an instance of the PLOD class.</li>
+<li>Chains together methods of the class to manipulate the list.</li>
+<li>Uses a &#8220;return&#8221; method to get the results you want.</li>
+</ol>
+<p>For example, to sort a list:</p>
+<blockquote>
+<div>from PLOD import PLOD
+my_list = PLOD(fruits).sort(&#8220;qty&#8221;).returnList()</div></blockquote>
+<p>Or, to get a string with comma-separated values with a filter:</p>
+<blockquote>
+<div>from PLOD import PLOD
+csv = PLOD(fruits).gt(&#8216;qty&#8217;, 1).returnCSV(keys=[&#8216;name&#8217;, &#8216;sizes&#8217;])</div></blockquote>
+<p>For more detailed information, please visit the [Documentation](/tbd).</p>
+</div>
+<div class="section" id="other-resources">
+<h2>Other Resources<a class="headerlink" href="#other-resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[GitHub Repository](<a class="reference external" href="https://github.com/MakerReduxCorp/PLOD">https://github.com/MakerReduxCorp/PLOD</a>)</li>
+<li>PyPI web site TBD</li>
+<li>Documentation TBD</li>
+<li>[Early Overview Video](<a class="reference external" href="http://videocenter1.vtcstream.com/videos/video/3546/embed/?access_token=shr00000035466053201644252204311242298919605">http://videocenter1.vtcstream.com/videos/video/3546/embed/?access_token=shr00000035466053201644252204311242298919605</a>)</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="PLOD Tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PLOD"
+             >previous</a> |</li>
+        <li><a href="index.html">PLOD 0.1.4working documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Maker Redux Corporation.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

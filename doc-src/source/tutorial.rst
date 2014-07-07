@@ -1,10 +1,38 @@
-PLOD - Brief Introduction
-=========================
+PLOD Tutorial
+=============
 
-*PLOD* is a simpler and easier way to manipulate lists of dictionaries. *PLOD* stands for Pythonic Lists of Dictionaries.
+This is a tutorial to give a narrative description of how to use the PLOD class/library.
 
-Why Lists of Dictionaries? Why PLOD?
-------------------------------------
+BUT FIRST: What is a *List of Dictionaries?*
+--------------------------------------------
+
+If you are already an expert on Lists, Dictionaries, and their characteristics, feel free
+to skip to the next section. There is nothing new in this part.
+
+Using PLOD to Filter a List
+---------------------------
+
+
+Using PLOD to Sort and Renumber
+-------------------------------
+
+
+Returning the Results
+---------------------
+
+
+Playing With the Original Index
+-------------------------------
+
+
+
+
+
+
+
+
+
+
 
 Increasingly, software is passing more complex data stores between machines and between processes. Examples include RESTful XML, JSON/MongoDB, Google protobuf, RabbitMQ, etc.
 
@@ -34,17 +62,6 @@ Or a more complex example:
     
 Here the list is sorted by color (missing colors at the top), filtered to entries with a size 3, and renumbered with a new key called "id".
 
-Installation
-------------
-
-*PLOD* is not yet available on PyPI, but when it does become available:
-
-Install _PLOD_ using pip:
-
-    pip install PLOD
-
-How to Use
-----------
 
 In general, one simply:
 
@@ -63,12 +80,4 @@ Or, to get a string with comma-separated values with a filter:
     csv = PLOD(fruits).gt('qty', 1).returnCSV(keys=['name', 'sizes'])
     
 For more detailed information, please visit the [Documentation](/tbd).
-
-Other Resources
----------------
-
-* [GitHub Repository](https://github.com/MakerReduxCorp/PLOD)
-* PyPI web site TBD
-* Documentation TBD
-* [Early Overview Video](http://videocenter1.vtcstream.com/videos/video/3546/embed/?access_token=shr00000035466053201644252204311242298919605)
 

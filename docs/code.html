@@ -1,0 +1,1342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PLOD Library Reference &mdash; PLOD 0.1.4working documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.4working',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PLOD 0.1.4working documentation" href="index.html" />
+    <link rel="prev" title="PLOD Tutorial" href="tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="PLOD Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PLOD 0.1.4working documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">PLOD Tutorial</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/code.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="plod-library-reference">
+<h1>PLOD Library Reference<a class="headerlink" href="#plod-library-reference" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="PLOD.PLOD">
+<em class="property">class </em><tt class="descclassname">PLOD.</tt><tt class="descname">PLOD</tt><big>(</big><em>table</em><big>)</big><a class="headerlink" href="#PLOD.PLOD" title="Permalink to this definition">¶</a></dt>
+<dd><p>PLOD: Pythonic List of Dictionaries Handler</p>
+<p>This is a class that allows you to manipulate lists of dictionaries in a
+clear and easy-to-interpret manner.</p>
+<p>HOW TO USE</p>
+<p>To use, create an instance of the PLOD class with the list of dictinoaries as
+it&#8217;s parameter. For example, given the following list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">29</span><span class="p">,</span> <span class="s">&quot;zim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;zam&quot;</span><span class="p">:</span> <span class="s">&quot;99&quot;</span><span class="p">}</span>              <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You can &#8216;load&#8217; PLOD with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, one can &#8216;stack&#8217; various methods together to manipulate that list of
+dictinoaries and return a result. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 29, income: None , name: &#39;Jim&#39; , wigs: None     , zim: {&#39;zam&#39;: &#39;99&#39;}},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39; , wigs: [1, 2, 3], zim: None         },</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;, wigs: None     , zim: None         }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>PLOD is designed to be very forgiving and, as much as possible, very flexible.</p>
+<dl class="method">
+<dt id="PLOD.PLOD.addKey">
+<tt class="descname">addKey</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.addKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a attribute/element/key-value pair to all the dictionaries.</p>
+<p>The same value is added to all of the dictionaries.</p>
+<p>Of note: the current version of this routine cannot handle subtending
+keys (dictionaries in dictionaries).</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">29</span><span class="p">,</span> <span class="s">&quot;zim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;zam&quot;</span><span class="p">:</span> <span class="s">&quot;99&quot;</span><span class="p">}</span>              <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">addKey</span><span class="p">(</span><span class="s">&quot;sp&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , sp: 3, wigs:        68, zim: None         },</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, sp: 3, wigs: [3, 2, 9], zim: None         },</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , sp: 3, wigs: [1, 2, 3], zim: None         },</span>
+<span class="go">    {age: 29, income: None , name: &#39;Jim&#39;  , sp: 3, wigs: None     , zim: {&#39;zam&#39;: &#39;99&#39;}},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , sp: 3, wigs: None     , zim: None         }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.4.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys point to final key)
+that should be removed.</li>
+<li><strong>value</strong> &#8211; The value assigned to the key.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.contains">
+<tt class="descname">contains</tt><big>(</big><em>key</em>, <em>value</em>, <em>findAll=False</em>, <em>exclude=False</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries that:</p>
+<ul class="simple">
+<li>have the key</li>
+<li>key points to a list, and</li>
+<li>value is found in the list.</li>
+</ul>
+<p>If value is also a list itself, then the list entry is selected if any of
+the values match.  If findAll is set to True, then all the entries
+must be found.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>  <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s">&quot;wigs&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;, wigs: [9, 12]  },</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;, wigs: [1, 2, 3]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.3b.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should point to
+a list.</li>
+<li><strong>value</strong> &#8211; <p>The value to locate in the list. This argument can be an immutable
+value such as a string, tuple, or number.</p>
+<p>If this argument is a list of values instead, then this method will
+search for any of the values in that list. If the optional &#8216;findAll&#8217;
+parameter is set to True, then all of the values in that list must
+be found.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Optional named arguments:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>finalAll</strong> &#8211; If True, then all the values in the &#8216;value&#8217; parameter must be found.</li>
+<li><strong>exclude</strong> &#8211; If &#8216;exclude&#8217; is True, then the entries that do NOT match the above
+conditions are returned.</li>
+<li><strong>includeMissing</strong> &#8211; If &#8216;includeMissing&#8217; is True, then if the key is missing then that
+entry is included in the results. However, it does not include
+entries that have the key but its value is for a non-list or empty
+list.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#PLOD.PLOD.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an integer representing the number of items in the list.</p>
+<p>It is the equivalent to:</p>
+<blockquote>
+<div>len(PLOD(list).returnList())</div></blockquote>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">gte</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Integer representing the number of items in the list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.deleteByOrigIndex">
+<tt class="descname">deleteByOrigIndex</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.deleteByOrigIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a single entry from the list given the index reference.</p>
+<p>The index, in this instance, is a reference to the <em>original</em> list
+indexing as seen when the list was first inserted into PLOD.</p>
+<p>An example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myPLOD</span> <span class="o">=</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myPLOD</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     },</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myPLOD</span><span class="o">.</span><span class="n">deleteByOrigIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     },</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>As you can see in the example, the list was sorted by &#8216;name&#8217;, which
+placed &#8216;Bill&#8217; as the first entry. Yet, when the deleteByOrigIndex was
+passed a zero (for the first entry), it removed &#8216;Jim&#8217; instead since
+it was the original first entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> &#8211; An integer representing the place of entry in the original list
+of dictionaries.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.deleteByOrigIndexList">
+<tt class="descname">deleteByOrigIndexList</tt><big>(</big><em>indexList</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.deleteByOrigIndexList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove entries from the list given the index references.</p>
+<p>The index, in this instance, is a reference to the <em>original</em> list
+indexing as seen when the list was first inserted into PLOD.</p>
+<p>An example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myPLOD</span> <span class="o">=</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myPLOD</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     },</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">listA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myPLOD</span><span class="o">.</span><span class="n">deleteByOrigIndexList</span><span class="p">(</span><span class="n">listA</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>As you can see in the example, the list was sorted by &#8216;name&#8217;, which
+rearranged the entries. Yet, when the deleteByOrigIndexList was
+passed a [0, 1] (for the first and second entries), it removed &#8216;Jim&#8217;
+and &#8220;Larry&#8221; since those were the original first and second entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indexList</strong> &#8211; A list of integer representing the places of entry in the original
+list of dictionaries.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.dropKey">
+<tt class="descname">dropKey</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.dropKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop an attribute/element/key-value pair from all the dictionaries.</p>
+<p>If the dictionary key does not exist in a particular dictionary, then
+that dictionary is left unchanged.</p>
+<p>Side effect: if the key is a number and it matches a list (interpreted
+as a dictionary), it will cause the &#8220;keys&#8221; to shift just as a list
+would be expected to.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">29</span><span class="p">,</span> <span class="s">&quot;zim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;zam&quot;</span><span class="p">:</span> <span class="s">&quot;99&quot;</span><span class="p">}</span>              <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">dropKey</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, name: &#39;Jim&#39;  , wigs:        68, zim: None         },</span>
+<span class="go">    {age: 18, name: &#39;Larry&#39;, wigs: [3, 2, 9], zim: None         },</span>
+<span class="go">    {age: 20, name: &#39;Joe&#39;  , wigs: [1, 2, 3], zim: None         },</span>
+<span class="go">    {age: 29, name: &#39;Jim&#39;  , wigs: None     , zim: {&#39;zam&#39;: &#39;99&#39;}},</span>
+<span class="go">    {age: 19, name: &#39;Bill&#39; , wigs: None     , zim: None         }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.2.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> &#8211; The dictionary key (or cascading list of keys point to final key)
+that should be removed.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.eq">
+<tt class="descname">eq</tt><big>(</big><em>key</em>, <em>value</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key&#8217;s value is of equal (==) value.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Larry&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="n">includeMissing</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.1.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+basis of comparison.</li>
+<li><strong>value</strong> &#8211; The value to compare with.</li>
+<li><strong>includeMissing</strong> &#8211; Defaults to False. If True, then entries missing the key are also
+included.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.found">
+<tt class="descname">found</tt><big>(</big><big>)</big><a class="headerlink" href="#PLOD.PLOD.found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if list has at least one entry; otherwise return False.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">found</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Simon&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">found</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if list has at least one entry, else False.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.gt">
+<tt class="descname">gt</tt><big>(</big><em>key</em>, <em>value</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.gt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key&#8217;s value is greater (&gt;).</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;, wigs: [1, 2, 3]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.1.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+basis of comparison.</li>
+<li><strong>value</strong> &#8211; The value to compare with.</li>
+<li><strong>includeMissing</strong> &#8211; Defaults to False. If True, then entries missing the key are also
+included.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.gte">
+<tt class="descname">gte</tt><big>(</big><em>key</em>, <em>value</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.gte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key&#8217;s value is greater or equal (&gt;=).</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">gte</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39; , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;, wigs: None     }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.1.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+basis of comparison.</li>
+<li><strong>value</strong> &#8211; The value to compare with.</li>
+<li><strong>includeMissing</strong> &#8211; Defaults to False. If True, then entries missing the key are also
+included.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.hasKey">
+<tt class="descname">hasKey</tt><big>(</big><em>key</em>, <em>notNone=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.hasKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key is present.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="bp">None</span> <span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">hasKey</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39; , wigs:        68},</span>
+<span class="go">    {age: 20, income: None , name: &#39;Joe&#39; , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;, wigs: None     }</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">hasKey</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="n">notNone</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39; , wigs:   68},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;, wigs: None}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.2.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) to locate.</li>
+<li><strong>notNone</strong> &#8211; If True, then None is the equivalent of a missing key. Otherwise, a key
+with a value of None is NOT considered missing.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.insert">
+<tt class="descname">insert</tt><big>(</big><em>new_entry</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a new entry to the end of the list of dictionaries.</p>
+<p>This entry retains the original index tracking but adds this
+entry incrementally at the end.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entryA</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Willie&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">77</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">entryA</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;   , wigs:        68},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39; , wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;   , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;  , wigs: None     },</span>
+<span class="go">    {age: 77, income: None , name: &#39;Willie&#39;, wigs: None     }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_entry</strong> &#8211; The new list entry to insert.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.lt">
+<tt class="descname">lt</tt><big>(</big><em>key</em>, <em>value</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.lt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key&#8217;s value is less (&lt;).</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.1.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+basis of comparison.</li>
+<li><strong>value</strong> &#8211; The value to compare with.</li>
+<li><strong>includeMissing</strong> &#8211; Defaults to False. If True, then entries missing the key are also
+included.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.lte">
+<tt class="descname">lte</tt><big>(</big><em>key</em>, <em>value</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.lte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key&#8217;s value is less or equal (=&lt;).</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">lte</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.1.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+basis of comparison.</li>
+<li><strong>value</strong> &#8211; The value to compare with.</li>
+<li><strong>includeMissing</strong> &#8211; Defaults to False. If True, then entries missing the key are also
+included.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.missing">
+<tt class="descname">missing</tt><big>(</big><big>)</big><a class="headerlink" href="#PLOD.PLOD.missing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if list is empty; otherwise return False.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">missing</span><span class="p">()</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Simon&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">missing</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&quot;Simon not found&quot;</span>
+<span class="go">Simon not found</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">False if list has one ore more entries, else True.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.missingKey">
+<tt class="descname">missingKey</tt><big>(</big><em>key</em>, <em>notNone=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.missingKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key is NOT present.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">missingKey</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">missingKey</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="n">notNone</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: None, name: &#39;Larry&#39;, wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 20, income: None, name: &#39;Joe&#39;  , wigs: [1, 2, 3]}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.2.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) to locate.</li>
+<li><strong>notNone</strong> &#8211; If True, then None is the equivalent of a missing key. Otherwise, a key
+with a value of None is NOT considered missing.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.ne">
+<tt class="descname">ne</tt><big>(</big><em>key</em>, <em>value</em>, <em>includeMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.ne" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return entries where the key&#8217;s value is NOT of equal (!=) value.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Larry&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39; , wigs:        68},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39; , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;, wigs: None     }</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="n">includeMissing</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.1.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+basis of comparison.</li>
+<li><strong>value</strong> &#8211; The value to compare with.</li>
+<li><strong>includeMissing</strong> &#8211; Defaults to False. If True, then entries missing the key are also
+included.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.renumber">
+<tt class="descname">renumber</tt><big>(</big><em>key</em>, <em>start=1</em>, <em>increment=1</em>, <em>insert=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.renumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Incrementally number a key based on the current order of the list.</p>
+<p>Please note that if an entry in the list does not have the specified
+key, it is NOT created (unless insert=True is passed). The entry is,
+however, still counted.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">renumber</span><span class="p">(</span><span class="s">&quot;order&quot;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">(</span><span class="n">honorMissing</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , order: 10},</span>
+<span class="go">    {age: 18,                name: &#39;Larry&#39;, order: 11},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , order: 12},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;            }</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">renumber</span><span class="p">(</span><span class="s">&quot;order&quot;</span><span class="p">,</span> <span class="n">increment</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">insert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">(</span><span class="n">honorMissing</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , order: 1},</span>
+<span class="go">    {age: 18,                name: &#39;Larry&#39;, order: 3},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , order: 5},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , order: 7}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.2.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should receive
+the numbering. The previous value is replaced, regardles of type
+or content. Every entry is still counted; even if the key is missing.</li>
+<li><strong>start</strong> &#8211; Defaults to 1. The starting number to begin counting with.</li>
+<li><strong>increment</strong> &#8211; Defaults to 1. The amount to increment by for each entry in the list.</li>
+<li><strong>insert</strong> &#8211; If True, then the key is inserted if missing. Else, the key is not
+inserted. Defaults to False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnCSV">
+<tt class="descname">returnCSV</tt><big>(</big><em>keys=None</em>, <em>limit=False</em>, <em>omitHeaderLine=False</em>, <em>quoteChar=None</em>, <em>eolChars='rn'</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of dictionaries formated as a comma seperated values
+(CSV) list in a string.</p>
+<p>Each entry is on one line. By default, each value is seperated by
+commas and each entry is followed by a newline (&#8216;n&#8217;).</p>
+<p>By default, RFC4180 is followed. See:</p>
+<blockquote>
+<div><a class="reference external" href="http://tools.ietf.org/html/rfc4180">http://tools.ietf.org/html/rfc4180</a></div></blockquote>
+<p>The RFC has considerable detail describing the format.</p>
+<p>Note regarding certain RFC section 2 sub 4: there is no default
+behavior specified if the last field on a line is empty and thus
+creating a &#8216;trailing comma&#8217;. This routine handles it by quoting
+the final field. The first example below demonstrates this for the
+entry with &#8216;name&#8217; of &#8216;Larry&#8217; and a missing &#8216;income&#8217; field. The
+missing field is shown as &#8220;&#8221; at the end of the line.</p>
+<p>Missing keys and/or values of None are simply blank.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim, Phd&quot;</span><span class="p">,</span>         <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span>  <span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span>            <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>              <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span>  <span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;B </span><span class="se">\&quot;</span><span class="s">Zip</span><span class="se">\&quot;</span><span class="s"> O&#39;Tool&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span>  <span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnCSV</span><span class="p">()</span>   
+<span class="go">age,order,name,income</span>
+<span class="go">18,2,&quot;Jim, Phd&quot;,93000</span>
+<span class="go">,3,Larry,&quot;&quot;</span>
+<span class="go">20,1,Joe,15000</span>
+<span class="go">19,4,&quot;B &quot;&quot;Zip&quot;&quot; O&#39;Tool&quot;,29000</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnCSV</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">omitHeaderLine</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">quoteChar</span><span class="o">=</span><span class="s">&quot;&#39;&quot;</span><span class="p">,</span> <span class="n">eolChars</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="go">&#39;18&#39;,&#39;2&#39;,&#39;Jim, Phd&#39;,&#39;93000&#39;</span>
+<span class="go">&#39;&#39;,&#39;3&#39;,&#39;Larry&#39;,&#39;&#39;</span>
+<span class="go">&#39;20&#39;,&#39;1&#39;,&#39;Joe&#39;,&#39;15000&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnCSV</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">],</span> <span class="n">quoteChar</span><span class="o">=</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span> <span class="n">eolChars</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="go">&quot;name&quot;,&quot;age&quot;</span>
+<span class="go">&quot;Jim, Phd&quot;,&quot;18&quot;</span>
+<span class="go">&quot;Larry&quot;,&quot;&quot;</span>
+<span class="go">&quot;Joe&quot;,&quot;20&quot;</span>
+<span class="go">&quot;B &quot;&quot;Zip&quot;&quot; O&#39;Tool&quot;,&quot;19&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>keys</strong> &#8211; <p>If the &#8216;keys&#8217; parameter is passed a list of keys, then only those
+keys are returned. The order of keys in the list is retained. If a
+key is not found in an entry (or in <em>any</em> entry), that is not an error
+condition. Those entries simply have an empty value for that position.</p>
+<p>NOTE: use this parameter if the order of the keys is critical. Order
+is not guaranteed otherwise.</p>
+</li>
+<li><strong>limit</strong> &#8211; A number limiting the quantity of entries to return. Defaults to
+False, which means that the full list is returned.</li>
+<li><strong>omitHeaderLine</strong> &#8211; If set to True, the initial line of text listing the keys
+is not included. Defaults to False.</li>
+<li><strong>quoteChar</strong> &#8211; If set to anything (including a single quote), then all fields will
+be surrounded by the quote character.</li>
+<li><strong>eolChars</strong> &#8211; These are the characters inserted at the end of each line. By default
+they are CRLF (&#8216;rn&#8217;) as specified in RFC4180. To be more pythonic
+you could change it to &#8216;n&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A string containing a formatted textual representation of the list
+of dictionaries.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnIndexList">
+<tt class="descname">returnIndexList</tt><big>(</big><em>limit=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnIndexList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of integers that are list-index references to the
+original list of dictionaries.&#8221;</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnIndexList</span><span class="p">()</span>
+<span class="go">[0, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnIndexList</span><span class="p">()</span>
+<span class="go">[3, 0, 2, 1]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>limit</strong> &#8211; A number limiting the quantity of entries to return. Defaults to
+False, which means that the full list is returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of integers representing the original indices.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnList">
+<tt class="descname">returnList</tt><big>(</big><em>limit=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a true list of dictionaries (and <em>not</em> a PLOD class).</p>
+<p>The list returned maintains the &#8216;types&#8217; of the original entries unless
+another operation has explicity change them. For example, an &#8216;upsert&#8217;
+replacement of an entry.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>  <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnList</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_list</span>
+<span class="go">[{&#39;age&#39;: 18, &#39;name&#39;: &#39;Jim&#39;, &#39;wigs&#39;: [9, 12], &#39;income&#39;: 93000}, {&#39;age&#39;: 18, &#39;name&#39;: &#39;Larry&#39;, &#39;wigs&#39;: [3, 2, 9]}, {&#39;age&#39;: 19, &#39;name&#39;: &#39;Bill&#39;, &#39;income&#39;: 29000}, {&#39;age&#39;: 20, &#39;name&#39;: &#39;Joe&#39;, &#39;wigs&#39;: [1, 2, 3], &#39;income&#39;: 15000}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&quot;age&quot;</span><span class="p">]</span>
+<span class="go">19</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>limit</strong> &#8211; A number limiting the quantity of entries to return. Defaults to
+False, which means that the full list is returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the list of dictionaries</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnOneEntry">
+<tt class="descname">returnOneEntry</tt><big>(</big><em>last=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnOneEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first entry in the current list. If &#8216;last=True&#8217;, then
+the last entry is returned.&#8221;</p>
+<p>Returns None is the list is empty.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnOneEntry</span><span class="p">()</span>
+<span class="go">{&#39;age&#39;: 18, &#39;order&#39;: 2, &#39;name&#39;: &#39;Jim&#39;, &#39;income&#39;: 93000}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnOneEntry</span><span class="p">(</span><span class="n">last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">{&#39;age&#39;: 19, &#39;order&#39;: 4, &#39;name&#39;: &#39;Bill&#39;, &#39;income&#39;: 29000}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>last</strong> &#8211; If True, the last entry is returned rather than the first.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list entry, or None if the list is empty.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnOneIndex">
+<tt class="descname">returnOneIndex</tt><big>(</big><em>last=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnOneIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first origin index (integer) of the current list. That
+index refers to it&#8217;s placement in the original list of dictionaries.&#8221;</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnOneIndex</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnOneIndex</span><span class="p">()</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>last</strong> &#8211; The last origin of the current list is returned rather than the first.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An integer representing the original placement of the first item in
+the list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnString">
+<tt class="descname">returnString</tt><big>(</big><em>limit=False</em>, <em>omitBrackets=False</em>, <em>executable=False</em>, <em>honorMissing=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string containing the list of dictionaries in easy
+human-readable read format.</p>
+<p>Each entry is on one line. Key/value pairs are &#8216;spaced&#8217; in such a way
+as to have them all line up vertically if using a monospace font. The
+fields are normalized to alphabetical order. Missing keys in a
+dictionary are inserted with a value of &#8216;None&#8217; unless <em>honorMissing</em> is
+set to True.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , order: 2},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, order: 3},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , order: 1},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , order: 4}</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">omitBrackets</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">executable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">{&#39;age&#39;: 18, &#39;income&#39;: 93000, &#39;name&#39;: &#39;Jim&#39;  , &#39;order&#39;: 2},</span>
+<span class="go">{&#39;age&#39;: 18, &#39;income&#39;: None , &#39;name&#39;: &#39;Larry&#39;, &#39;order&#39;: 3},</span>
+<span class="go">{&#39;age&#39;: 20, &#39;income&#39;: 15000, &#39;name&#39;: &#39;Joe&#39;  , &#39;order&#39;: 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">(</span><span class="n">honorMissing</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , order: 2},</span>
+<span class="go">    {age: 18,                name: &#39;Larry&#39;, order: 3},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , order: 1},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , order: 4}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>limit</strong> &#8211; A number limiting the quantity of entries to return. Defaults to
+False, which means that the full list is returned.</li>
+<li><strong>omitBrackets</strong> &#8211; If set to True, the outer square brackets representing the entire
+list are omitted. Defaults to False.</li>
+<li><strong>executable</strong> &#8211; If set to True, the string is formatted in such a way that it
+conforms to Python syntax. Defaults to False.</li>
+<li><strong>honorMissing</strong> &#8211; If set to True, keys that are missing in a dictionary are simply
+skipped with spaces. If False, then the key is display and given
+a value of None. Defaults to False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A string containing a formatted textual representation of the list
+of dictionaries.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnValue">
+<tt class="descname">returnValue</tt><big>(</big><em>key</em>, <em>last=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the key&#8217;s value for the first entry in the current list.
+If &#8216;last=True&#8217;, then the last entry is referenced.&#8221;</p>
+<p>Returns None is the list is empty or the key is missing.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<span class="go">Jim</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">Larry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>last</strong> &#8211; If True, the last entry is used rather than the first.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A value, or None if the list is empty or the key is missing.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.returnValueList">
+<tt class="descname">returnValueList</tt><big>(</big><em>key_list</em>, <em>last=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.returnValueList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of key values for the first entry in the current list.
+If &#8216;last=True&#8217;, then the last entry is referenced.&#8221;</p>
+<p>Returns None is the list is empty. If a key is missing, then
+that entry in the list is None.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span><span class="p">,</span> <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">returnValueList</span><span class="p">([</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">])</span>
+<span class="go">[&#39;Jim&#39;, 93000]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnValueList</span><span class="p">([</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">],</span> <span class="n">last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[&#39;Larry&#39;, None]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>last</strong> &#8211; If True, the last entry is used rather than the first.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A value, or None if the list is empty.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.sort">
+<tt class="descname">sort</tt><big>(</big><em>key</em>, <em>reverse=False</em>, <em>none_greater=False</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the list in the order of the dictionary key.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     },</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]}</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&quot;income&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39;, wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;  , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39; , wigs: None     },</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;  , wigs:        68}</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.0.2.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key (or cascading list of keys) that should be the
+bassis of the sorting.</li>
+<li><strong>reverse</strong> &#8211; Defaults to False. If True, then list is sorted decrementally.</li>
+<li><strong>none_greater</strong> &#8211; Defaults to False. If True, then entries missing the key/value
+pair are considered be of greater value than the non-missing values.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PLOD.PLOD.upsert">
+<tt class="descname">upsert</tt><big>(</big><em>key</em>, <em>value</em>, <em>entry</em><big>)</big><a class="headerlink" href="#PLOD.PLOD.upsert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update or Insert an entry into the list of dictionaries.</p>
+<dl class="docutils">
+<dt>If a dictionary in the list is found where key matches the value, then</dt>
+<dd>the FIRST matching list entry is replaced with entry</dd>
+<dt>else</dt>
+<dd>the entry is appended to the end of the list.</dd>
+</dl>
+<p>The new entry is not examined in any way. It is, in fact, possible
+to upsert an entry that does not match the supplied key/value.</p>
+<p>Example of use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jim&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">93000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="mi">68</span>       <span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Larry&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>                  <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>   <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">15000</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Bill&quot;</span><span class="p">,</span>  <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">29000</span>                   <span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entryA</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Willie&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">77</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myPLOD</span> <span class="o">=</span> <span class="n">PLOD</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myPLOD</span><span class="o">.</span><span class="n">upsert</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Willie&quot;</span><span class="p">,</span> <span class="n">entryA</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;   , wigs:        68},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39; , wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 20, income: 15000, name: &#39;Joe&#39;   , wigs: [1, 2, 3]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;  , wigs: None     },</span>
+<span class="go">    {age: 77, income: None , name: &#39;Willie&#39;, wigs: None     }</span>
+<span class="go">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entryB</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s">&quot;wigs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myPLOD</span><span class="o">.</span><span class="n">upsert</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span> <span class="n">entryB</span><span class="p">)</span><span class="o">.</span><span class="n">returnString</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {age: 18, income: 93000, name: &#39;Jim&#39;   , wigs:        68},</span>
+<span class="go">    {age: 18, income: None , name: &#39;Larry&#39; , wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 20, income:    30, name: &#39;Joe&#39;   , wigs: [3, 2, 9]},</span>
+<span class="go">    {age: 19, income: 29000, name: &#39;Bill&#39;  , wigs: None     },</span>
+<span class="go">    {age: 77, income: None , name: &#39;Willie&#39;, wigs: None     }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; The dictionary key to examine.</li>
+<li><strong>value</strong> &#8211; The value to search for as referenced by the key.</li>
+<li><strong>entry</strong> &#8211; The replacement (or new) entry for the list.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">class</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="PLOD Tutorial"
+             >previous</a> |</li>
+        <li><a href="index.html">PLOD 0.1.4working documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Maker Redux Corporation.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
