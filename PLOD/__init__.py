@@ -133,7 +133,7 @@ class PLOD(object):
             {age: 19, name: 'Bill' , wigs: None     , zim: None         }
         ]
         
-        .. versionadded:: 0.0.2
+        .. versionadded:: 0.1.2
         
         :param key:
            The dictionary key (or cascading list of keys point to final key)
@@ -145,6 +145,52 @@ class PLOD(object):
             result.append(internal.remove_member(row, key))
         self.table = result
         return self
+
+    def addKey(self, key, value):
+        '''Insert a attribute/element/key-value pair to all the dictionaries.
+
+        The same value is added to all of the dictionaries.
+
+        Of note: the current version of this routine cannot handle subtending
+        keys (dictionaries in dictionaries).
+
+        Example of use:
+
+        >>> test = [
+        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Jim",   "age": 29, "zim": {"zam": "99"}              },
+        ...    {"name": "Bill",  "age": 19, "income": 29000                   },
+        ... ]
+        >>> print PLOD(test).addKey("sp", 3).returnString()
+        [
+            {age:  3, income: 93000, name: 'Jim'  , sp: 3, wigs:        68, zim: None         },
+            {age:  3, income: None , name: 'Larry', sp: 3, wigs: [3, 2, 9], zim: None         },
+            {age: 20, income: 15000, name: 'Joe'  , sp: 3, wigs: [1, 2, 3], zim: None         },
+            {age: 29, income: None , name: 'Jim'  , sp: 3, wigs: None     , zim: {'zam': '99'}},
+            {age: 19, income: 29000, name: 'Bill' , sp: 3, wigs: None     , zim: None         }
+        ]
+        
+        .. versionadded:: 0.1.4
+        
+        :param key:
+           The dictionary key (or cascading list of keys point to final key)
+           that should be removed.
+        :param value:
+           The value assigned to the key.
+        :returns: self
+        '''
+        result = []
+        for row in self.table:
+            try:
+                row[key]=value
+            except:
+                pass
+            result.append(row)
+        self.table = result
+        return self
+
 
     ############################
     # List Modifications
@@ -343,11 +389,12 @@ class PLOD(object):
     # List Sorting/Arrangement routines
     ############################
 
-    def renumber(self, key, start=1, increment=1):
+    def renumber(self, key, start=1, increment=1, insert=False):
         '''Incrementally number a key based on the current order of the list.
 
         Please note that if an entry in the list does not have the specified
-        key, it is NOT created. The entry is, however, still counted.
+        key, it is NOT created (unless insert=True is passed). The entry is,
+        however, still counted.
 
         Example of use:
 
@@ -355,33 +402,45 @@ class PLOD(object):
         ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
         ...    {"name": "Larry", "age": 3 ,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
-        ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
+        ...    {"name": "Bill",  "age": 19, "income": 29000},
         ... ]
-        >>> print PLOD(test).renumber("order", start=10).returnString()
+        >>> print PLOD(test).renumber("order", start=10).returnString(honorMissing=True)
         [
             {age:  3, income: 93000, name: 'Jim'  , order: 10},
-            {age:  3, income: None , name: 'Larry', order: 11},
+            {age:  3,                name: 'Larry', order: 11},
             {age: 20, income: 15000, name: 'Joe'  , order: 12},
-            {age: 19, income: 29000, name: 'Bill' , order: 13}
+            {age: 19, income: 29000, name: 'Bill'            }
+        ]
+        >>> print PLOD(test).renumber("order", increment=2, insert=True).returnString(honorMissing=True)
+        [
+            {age:  3, income: 93000, name: 'Jim'  , order: 1},
+            {age:  3,                name: 'Larry', order: 3},
+            {age: 20, income: 15000, name: 'Joe'  , order: 5},
+            {age: 19, income: 29000, name: 'Bill' , order: 7}
         ]
         
-        .. versionadded:: 0.0.2
+        .. versionadded:: 0.1.2
         
         :param key:
             The dictionary key (or cascading list of keys) that should receive
             the numbering. The previous value is replaced, regardles of type
-            or content. However, if the key does not exist, it is not created.
-            However, that entry is still counted.
+            or content. Every entry is still counted; even if the key is missing.
         :param start:
             Defaults to 1. The starting number to begin counting with.
         :param increment:
             Defaults to 1. The amount to increment by for each entry in the list.
+        :param insert:
+            If True, then the key is inserted if missing. Else, the key is not
+            inserted. Defaults to False.
         :returns: self
         '''
         result = []
         counter = start
+        if insert:
+            self.addKey(key, 0)
         for row in self.table:
-            new_row = internal.modify_member(row, key, counter)
+            if internal.detect_member(row, key):
+                row = internal.modify_member(row, key, counter)
             result.append(row)
             counter += increment
         self.table = result
@@ -460,7 +519,7 @@ class PLOD(object):
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]}
         ]
         
-        .. versionadded:: 0.0.1
+        .. versionadded:: 0.1.1
         
         :param key:
            The dictionary key (or cascading list of keys) that should be the
@@ -499,7 +558,7 @@ class PLOD(object):
             {age: 19, income: 29000, name: 'Bill' , wigs: None     }
         ]
         
-        .. versionadded:: 0.0.1
+        .. versionadded:: 0.1.1
         
         :param key:
            The dictionary key (or cascading list of keys) that should be the
@@ -530,7 +589,7 @@ class PLOD(object):
             {age: 20, income: 15000, name: 'Joe', wigs: [1, 2, 3]}
         ]
         
-        .. versionadded:: 0.0.1
+        .. versionadded:: 0.1.1
         
         :param key:
            The dictionary key (or cascading list of keys) that should be the
@@ -562,7 +621,7 @@ class PLOD(object):
             {age: 19, income: 29000, name: 'Bill', wigs: None     }
         ]
         
-        .. versionadded:: 0.0.1
+        .. versionadded:: 0.1.1
         
         :param key:
            The dictionary key (or cascading list of keys) that should be the
@@ -594,7 +653,7 @@ class PLOD(object):
             {age: 3, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
         
-        .. versionadded:: 0.0.1
+        .. versionadded:: 0.1.1
         
         :param key:
            The dictionary key (or cascading list of keys) that should be the
@@ -627,7 +686,7 @@ class PLOD(object):
             {age: 19, income: 29000, name: 'Bill' , wigs: None     }
         ]
         
-        .. versionadded:: 0.0.1
+        .. versionadded:: 0.1.1
         
         :param key:
            The dictionary key (or cascading list of keys) that should be the
@@ -660,7 +719,7 @@ class PLOD(object):
             {age: 19, income: 29000, name: 'Bill', wigs: None     }
         ]
         
-        .. versionadded:: 0.0.2
+        .. versionadded:: 0.1.2
         
         :param key:
            The dictionary key (or cascading list of keys) to locate.
@@ -694,7 +753,7 @@ class PLOD(object):
             {age: 3, name: 'Larry', wigs: [3, 2, 9]}
         ]
         
-        .. versionadded:: 0.0.2
+        .. versionadded:: 0.1.2
         
         :param key:
            The dictionary key (or cascading list of keys) to locate.
@@ -736,7 +795,7 @@ class PLOD(object):
             {age: 20, income: 15000, name: 'Joe', wigs: [1, 2, 3]}
         ]
 
-        .. versionadded:: 0.0.3b
+        .. versionadded:: 0.1.3b
         
         :param key:
            The dictionary key (or cascading list of keys) that should point to
@@ -833,14 +892,15 @@ class PLOD(object):
                 result.append(self.table[i])
         return result
 
-    def returnString(self, limit=False, omitBrackets=False, executable=False):
+    def returnString(self, limit=False, omitBrackets=False, executable=False, honorMissing=False):
         '''Return a string containing the list of dictionaries in easy
         human-readable read format.
 
         Each entry is on one line. Key/value pairs are 'spaced' in such a way
         as to have them all line up vertically if using a monospace font. The
         fields are normalized to alphabetical order. Missing keys in a
-        dictionary are inserted with a value of 'None'.
+        dictionary are inserted with a value of 'None' unless *honorMissing* is
+        set to True.
 
         Example of use:
 
@@ -861,6 +921,13 @@ class PLOD(object):
         {'age':  3, 'income': 93000, 'name': 'Jim'  , 'order': 2},
         {'age':  3, 'income': None , 'name': 'Larry', 'order': 3},
         {'age': 20, 'income': 15000, 'name': 'Joe'  , 'order': 1}
+        >>> print PLOD(test).returnString(honorMissing=True)
+        [
+            {age:  3, income: 93000, name: 'Jim'  , order: 2},
+            {age:  3,                name: 'Larry', order: 3},
+            {age: 20, income: 15000, name: 'Joe'  , order: 1},
+            {age: 19, income: 29000, name: 'Bill' , order: 4}
+        ]
         
         :param limit:
            A number limiting the quantity of entries to return. Defaults to
@@ -871,6 +938,10 @@ class PLOD(object):
         :param executable:
            If set to True, the string is formatted in such a way that it
            conforms to Python syntax. Defaults to False.
+        :param honorMissing:
+           If set to True, keys that are missing in a dictionary are simply
+           skipped with spaces. If False, then the key is display and given
+           a value of None. Defaults to False.
         :return:
            A string containing a formatted textual representation of the list
            of dictionaries.
@@ -898,8 +969,9 @@ class PLOD(object):
         for row in used_table:
             for key in attr_width:
                 if not key in row:
-                    if attr_width[key] < len("None"):
-                        attr_width[key] = len("None")
+                    if not honorMissing:
+                        if attr_width[key] < len("None"):
+                            attr_width[key] = len("None")
                 else:
                     if len(repr(row[key])) > attr_width[key]:
                         attr_width[key] = len(repr(row[key]))
@@ -914,19 +986,37 @@ class PLOD(object):
             row_string += "{"
             middle = []
             for key in attr_order:
-                if executable:
-                    item = "'"+str(key) + "': "
-                else:
-                    item = str(key) + ": "
                 if key in row:
+                    # build the key
+                    if executable:
+                        item = "'"+str(key) + "': "
+                    else:
+                        item = str(key) + ": "
+                    # build the value
                     s = repr(row[key])
                     if type(row[key]) is typemod.IntType:
                         s = s.rjust(attr_width[key])
                 else:
-                    s = "None"
+                    if honorMissing:
+                        # build the key
+                        item = " "*len(str(key))
+                        if executable:
+                            item += "  "
+                        item +=  "  "
+                        # build the value
+                        s=""
+                    else:
+                        # build the key
+                        if executable:
+                            item = "'"+str(key) + "': "
+                        else:
+                            item = str(key) + ": "
+                        # build the value
+                        s = "None"
                 item += s.ljust(attr_width[key])
                 middle.append(item)
-            row_string += ", ".join(middle)
+            # row_string += ", ".join(middle)
+            row_string += internal.special_join(middle)
             row_string += "}"
             body.append(row_string)
         result += ",\n".join(body)
@@ -1329,6 +1419,7 @@ if __name__ == "__main__":
         print doctest.run_docstring_examples(PLOD.__init__, None)
         # list modification
         print doctest.run_docstring_examples(PLOD.dropKey, None)
+        print doctest.run_docstring_examples(PLOD.addKey, None)
         print doctest.run_docstring_examples(PLOD.upsert, None)
         print doctest.run_docstring_examples(PLOD.insert, None)
         print doctest.run_docstring_examples(PLOD.deleteByOrigIndex, None)

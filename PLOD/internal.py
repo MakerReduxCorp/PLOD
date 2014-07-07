@@ -140,6 +140,21 @@ def remove_member(row, key):
         del target[tkey]
     return row
 
+def detect_member(row, key):
+    ''' properly detects if a an attribute exists '''
+    (target, tkey, tvalue) = dict_crawl(row, key)
+    if target:
+        return True
+    return False
+
+def get_member(row, key):
+    ''' properly detects if a an attribute exists '''
+    (target, tkey, tvalue) = dict_crawl(row, key)
+    if target:
+        return tvalue
+    return None
+
+    
 def do_op(field, op, value):
     if op==NOOP:
         return True
@@ -327,4 +342,23 @@ def csv_quote(quote_char, s):
         if c==quote_char:
             result += c
     result += quote_char
+    return result
+    
+def special_join(alist):
+    if len(alist)==0:
+        return ""
+    elif len(alist)==1:
+        return alist[0]
+    result = alist[0]
+    prev = alist[0]
+    for ctr, entry in enumerate(alist[1:]):
+        if prev.strip()=="":
+            result += "  "
+        else:
+            if (ctr+2)==len(alist) and entry.strip()=="":
+                result += "  "
+            else:
+                result += ", "
+        result += entry
+        prev = entry
     return result
