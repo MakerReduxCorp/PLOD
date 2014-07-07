@@ -25,8 +25,8 @@ class PLOD(object):
     it's parameter. For example, given the following list:
 
     >>> test = [
-    ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-    ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+    ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+    ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
     ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
     ...    {"name": "Jim",   "age": 29, "zim": {"zam": "99"}              },
     ...    {"name": "Bill",  "age": 19, "income": 29000                   },
@@ -118,16 +118,16 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Jim",   "age": 29, "zim": {"zam": "99"}              },
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).dropKey("income").returnString()
         [
-            {age:  3, name: 'Jim'  , wigs:        68, zim: None         },
-            {age:  3, name: 'Larry', wigs: [3, 2, 9], zim: None         },
+            {age: 18, name: 'Jim'  , wigs:        68, zim: None         },
+            {age: 18, name: 'Larry', wigs: [3, 2, 9], zim: None         },
             {age: 20, name: 'Joe'  , wigs: [1, 2, 3], zim: None         },
             {age: 29, name: 'Jim'  , wigs: None     , zim: {'zam': '99'}},
             {age: 19, name: 'Bill' , wigs: None     , zim: None         }
@@ -157,16 +157,16 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Jim",   "age": 29, "zim": {"zam": "99"}              },
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).addKey("sp", 3).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'  , sp: 3, wigs:        68, zim: None         },
-            {age:  3, income: None , name: 'Larry', sp: 3, wigs: [3, 2, 9], zim: None         },
+            {age: 18, income: 93000, name: 'Jim'  , sp: 3, wigs:        68, zim: None         },
+            {age: 18, income: None , name: 'Larry', sp: 3, wigs: [3, 2, 9], zim: None         },
             {age: 20, income: 15000, name: 'Joe'  , sp: 3, wigs: [1, 2, 3], zim: None         },
             {age: 29, income: None , name: 'Jim'  , sp: 3, wigs: None     , zim: {'zam': '99'}},
             {age: 19, income: 29000, name: 'Bill' , sp: 3, wigs: None     , zim: None         }
@@ -210,8 +210,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
@@ -219,8 +219,8 @@ class PLOD(object):
         >>> myPLOD = PLOD(test)
         >>> print myPLOD.upsert("name", "Willie", entryA).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'   , wigs:        68},
-            {age:  3, income: None , name: 'Larry' , wigs: [3, 2, 9]},
+            {age: 18, income: 93000, name: 'Jim'   , wigs:        68},
+            {age: 18, income: None , name: 'Larry' , wigs: [3, 2, 9]},
             {age: 20, income: 15000, name: 'Joe'   , wigs: [1, 2, 3]},
             {age: 19, income: 29000, name: 'Bill'  , wigs: None     },
             {age: 77, income: None , name: 'Willie', wigs: None     }
@@ -228,8 +228,8 @@ class PLOD(object):
         >>> entryB = {"name": "Joe", "age": 20, "income": 30, "wigs": [3, 2, 9]}
         >>> print myPLOD.upsert("name", "Joe", entryB).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'   , wigs:        68},
-            {age:  3, income: None , name: 'Larry' , wigs: [3, 2, 9]},
+            {age: 18, income: 93000, name: 'Jim'   , wigs:        68},
+            {age: 18, income: None , name: 'Larry' , wigs: [3, 2, 9]},
             {age: 20, income:    30, name: 'Joe'   , wigs: [3, 2, 9]},
             {age: 19, income: 29000, name: 'Bill'  , wigs: None     },
             {age: 77, income: None , name: 'Willie', wigs: None     }
@@ -259,16 +259,16 @@ class PLOD(object):
         entry incrementally at the end.
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> entryA = {"name": "Willie", "age": 77}
         >>> print PLOD(test).insert(entryA).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'   , wigs:        68},
-            {age:  3, income: None , name: 'Larry' , wigs: [3, 2, 9]},
+            {age: 18, income: 93000, name: 'Jim'   , wigs:        68},
+            {age: 18, income: None , name: 'Larry' , wigs: [3, 2, 9]},
             {age: 20, income: 15000, name: 'Joe'   , wigs: [1, 2, 3]},
             {age: 19, income: 29000, name: 'Bill'  , wigs: None     },
             {age: 77, income: None , name: 'Willie', wigs: None     }
@@ -290,8 +290,8 @@ class PLOD(object):
         An example:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
@@ -299,15 +299,15 @@ class PLOD(object):
         >>> print myPLOD.sort("name").returnString()
         [
             {age: 19, income: 29000, name: 'Bill' , wigs: None     },
-            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
         >>> print myPLOD.deleteByOrigIndex(0).returnString()
         [
             {age: 19, income: 29000, name: 'Bill' , wigs: None     },
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
 
         As you can see in the example, the list was sorted by 'name', which
@@ -340,8 +340,8 @@ class PLOD(object):
         An example:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
@@ -349,15 +349,15 @@ class PLOD(object):
         >>> print myPLOD.sort("name").returnString()
         [
             {age: 19, income: 29000, name: 'Bill' , wigs: None     },
-            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
         >>> listA = [0, 1]
         >>> print myPLOD.deleteByOrigIndexList(listA).returnString()
         [
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
 
         As you can see in the example, the list was sorted by 'name', which
@@ -399,22 +399,22 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000},
         ... ]
         >>> print PLOD(test).renumber("order", start=10).returnString(honorMissing=True)
         [
-            {age:  3, income: 93000, name: 'Jim'  , order: 10},
-            {age:  3,                name: 'Larry', order: 11},
+            {age: 18, income: 93000, name: 'Jim'  , order: 10},
+            {age: 18,                name: 'Larry', order: 11},
             {age: 20, income: 15000, name: 'Joe'  , order: 12},
             {age: 19, income: 29000, name: 'Bill'            }
         ]
         >>> print PLOD(test).renumber("order", increment=2, insert=True).returnString(honorMissing=True)
         [
-            {age:  3, income: 93000, name: 'Jim'  , order: 1},
-            {age:  3,                name: 'Larry', order: 3},
+            {age: 18, income: 93000, name: 'Jim'  , order: 1},
+            {age: 18,                name: 'Larry', order: 3},
             {age: 20, income: 15000, name: 'Joe'  , order: 5},
             {age: 19, income: 29000, name: 'Bill' , order: 7}
         ]
@@ -452,24 +452,24 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).sort("name").returnString()
         [
             {age: 19, income: 29000, name: 'Bill' , wigs: None     },
-            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
         >>> print PLOD(test).sort("income").returnString()
         [
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]},
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]},
             {age: 19, income: 29000, name: 'Bill' , wigs: None     },
-            {age:  3, income: 93000, name: 'Jim'  , wigs:        68}
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68}
         ]
         
         .. versionadded:: 0.0.2
@@ -504,18 +504,18 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).eq("name", "Larry").returnString()
         [
-            {age: 3, name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, name: 'Larry', wigs: [3, 2, 9]}
         ]
         >>> print PLOD(test).eq("income", 15000, includeMissing=True).returnString()
         [
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]},
             {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]}
         ]
         
@@ -540,21 +540,21 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).ne("name", "Larry").returnString()
         [
-            {age:  3, income: 93000, name: 'Jim' , wigs:        68},
+            {age: 18, income: 93000, name: 'Jim' , wigs:        68},
             {age: 20, income: 15000, name: 'Joe' , wigs: [1, 2, 3]},
             {age: 19, income: 29000, name: 'Bill', wigs: None     }
         ]
         >>> print PLOD(test).ne("income", 15000, includeMissing=True).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]},
             {age: 19, income: 29000, name: 'Bill' , wigs: None     }
         ]
         
@@ -579,8 +579,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
@@ -610,8 +610,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
@@ -642,15 +642,15 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).lt("age", 19).returnString()
         [
-            {age: 3, income: 93000, name: 'Jim'  , wigs:        68},
-            {age: 3, income: None , name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]}
         ]
         
         .. versionadded:: 0.1.1
@@ -674,15 +674,15 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).lte("age", 19).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'  , wigs:        68},
-            {age:  3, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]},
             {age: 19, income: 29000, name: 'Bill' , wigs: None     }
         ]
         
@@ -701,69 +701,86 @@ class PLOD(object):
         (self.table, self.index_track) = internal.select(self.table, self.index_track, key, self.LESSorEQUAL, value, includeMissing)
         return self
 
-    def hasKey(self, key):
+    def hasKey(self, key, notNone=False):
         '''Return entries where the key is present.
 
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
-        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": None , "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).hasKey("income").returnString()
         [
-            {age:  3, income: 93000, name: 'Jim' , wigs:        68},
-            {age: 20, income: 15000, name: 'Joe' , wigs: [1, 2, 3]},
+            {age: 18, income: 93000, name: 'Jim' , wigs:        68},
+            {age: 20, income: None , name: 'Joe' , wigs: [1, 2, 3]},
             {age: 19, income: 29000, name: 'Bill', wigs: None     }
+        ]
+        >>> print PLOD(test).hasKey("income", notNone=True).returnString()
+        [
+            {age: 18, income: 93000, name: 'Jim' , wigs:   68},
+            {age: 19, income: 29000, name: 'Bill', wigs: None}
         ]
         
         .. versionadded:: 0.1.2
         
         :param key:
            The dictionary key (or cascading list of keys) to locate.
+        :param notNone:
+           If True, then None is the equivalent of a missing key. Otherwise, a key
+           with a value of None is NOT considered missing.
         :returns: self
         '''
         result = []
         result_tracker = []
 
         for counter, row in enumerate(self.table):
-            (target, _, _) = internal.dict_crawl(row, key)
+            (target, _, value) = internal.dict_crawl(row, key)
             if target:
-                result.append(row)
-                result_tracker.append(self.index_track[counter])
+                if notNone==False or not value is None:
+                    result.append(row)
+                    result_tracker.append(self.index_track[counter])
         self.table = result
         self.index_track = result_tracker
         return self
 
-    def missingKey(self, key):
+    def missingKey(self, key, notNone=False):
         '''Return entries where the key is NOT present.
 
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": 68       },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
-        ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": 68       },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Joe",   "age": 20, "income": None,  "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).missingKey("income").returnString()
         [
-            {age: 3, name: 'Larry', wigs: [3, 2, 9]}
+            {age: 18, name: 'Larry', wigs: [3, 2, 9]}
+        ]
+        >>> print PLOD(test).missingKey("income", notNone=True).returnString()
+        [
+            {age: 18, income: None, name: 'Larry', wigs: [3, 2, 9]},
+            {age: 20, income: None, name: 'Joe'  , wigs: [1, 2, 3]}
         ]
         
         .. versionadded:: 0.1.2
         
         :param key:
            The dictionary key (or cascading list of keys) to locate.
+        :param notNone:
+           If True, then None is the equivalent of a missing key. Otherwise, a key
+           with a value of None is NOT considered missing.
         :returns: self
         '''
         result = []
         result_tracker = []
         for counter, row in enumerate(self.table):
-            (target, _, _) = internal.dict_crawl(row, key)
-            if not target:
+            (target, _, value) = internal.dict_crawl(row, key)
+            if (not target) or (notNone and (value is None)):
                 result.append(row)
                 result_tracker.append(self.index_track[counter])
         self.table = result
@@ -784,14 +801,14 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": [9, 12]  },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": [9, 12]  },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> print PLOD(test).contains("wigs", [1, 12]).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim', wigs: [9, 12]  },
+            {age: 18, income: 93000, name: 'Jim', wigs: [9, 12]  },
             {age: 20, income: 15000, name: 'Joe', wigs: [1, 2, 3]}
         ]
 
@@ -867,14 +884,14 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "wigs": [9, 12]  },
-        ...    {"name": "Larry", "age": 3 ,                  "wigs": [3, 2, 9]},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "wigs": [9, 12]  },
+        ...    {"name": "Larry", "age": 18,                  "wigs": [3, 2, 9]},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "wigs": [1, 2, 3]},
         ...    {"name": "Bill",  "age": 19, "income": 29000                   },
         ... ]
         >>> my_list = PLOD(test).sort("age").returnList()
         >>> print my_list
-        [{'age': 3, 'name': 'Jim', 'wigs': [9, 12], 'income': 93000}, {'age': 3, 'name': 'Larry', 'wigs': [3, 2, 9]}, {'age': 19, 'name': 'Bill', 'income': 29000}, {'age': 20, 'name': 'Joe', 'wigs': [1, 2, 3], 'income': 15000}]
+        [{'age': 18, 'name': 'Jim', 'wigs': [9, 12], 'income': 93000}, {'age': 18, 'name': 'Larry', 'wigs': [3, 2, 9]}, {'age': 19, 'name': 'Bill', 'income': 29000}, {'age': 20, 'name': 'Joe', 'wigs': [1, 2, 3], 'income': 15000}]
         >>> print my_list[2]["age"]
         19
 
@@ -905,26 +922,26 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
         >>> print PLOD(test).returnString()
         [
-            {age:  3, income: 93000, name: 'Jim'  , order: 2},
-            {age:  3, income: None , name: 'Larry', order: 3},
+            {age: 18, income: 93000, name: 'Jim'  , order: 2},
+            {age: 18, income: None , name: 'Larry', order: 3},
             {age: 20, income: 15000, name: 'Joe'  , order: 1},
             {age: 19, income: 29000, name: 'Bill' , order: 4}
         ]
         >>> print PLOD(test).returnString(limit=3, omitBrackets=True, executable=True)
-        {'age':  3, 'income': 93000, 'name': 'Jim'  , 'order': 2},
-        {'age':  3, 'income': None , 'name': 'Larry', 'order': 3},
+        {'age': 18, 'income': 93000, 'name': 'Jim'  , 'order': 2},
+        {'age': 18, 'income': None , 'name': 'Larry', 'order': 3},
         {'age': 20, 'income': 15000, 'name': 'Joe'  , 'order': 1}
         >>> print PLOD(test).returnString(honorMissing=True)
         [
-            {age:  3, income: 93000, name: 'Jim'  , order: 2},
-            {age:  3,                name: 'Larry', order: 3},
+            {age: 18, income: 93000, name: 'Jim'  , order: 2},
+            {age: 18,                name: 'Larry', order: 3},
             {age: 20, income: 15000, name: 'Joe'  , order: 1},
             {age: 19, income: 29000, name: 'Bill' , order: 4}
         ]
@@ -1051,26 +1068,26 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim, Phd",         "age": 3   , "income": 93000, "order": 2},
+        ...    {"name": "Jim, Phd",         "age": 18  , "income": 93000, "order": 2},
         ...    {"name": "Larry",            "age": None,                  "order": 3},
         ...    {"name": "Joe",              "age": 20  , "income": 15000, "order": 1},
         ...    {"name": "B \"Zip\" O'Tool", "age": 19  , "income": 29000, "order": 4},
         ... ]
         >>> print PLOD(test).returnCSV()   # doctest: +NORMALIZE_WHITESPACE
         age,order,name,income
-        3,2,"Jim, Phd",93000
+        18,2,"Jim, Phd",93000
         ,3,Larry,""
         20,1,Joe,15000
         19,4,"B ""Zip"" O'Tool",29000
         <BLANKLINE>
         >>> print PLOD(test).returnCSV(limit=3, omitHeaderLine=True, quoteChar="'", eolChars='\n')
-        '3','2','Jim, Phd','93000'
+        '18','2','Jim, Phd','93000'
         '','3','Larry',''
         '20','1','Joe','15000'
         <BLANKLINE>
         >>> print PLOD(test).returnCSV(keys=["name", "age"], quoteChar='"', eolChars='\n')
         "name","age"
-        "Jim, Phd","3"
+        "Jim, Phd","18"
         "Larry",""
         "Joe","20"
         "B ""Zip"" O'Tool","19"
@@ -1169,8 +1186,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
@@ -1201,8 +1218,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
@@ -1235,13 +1252,13 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
         >>> print PLOD(test).returnOneEntry()
-        {'age': 3, 'order': 2, 'name': 'Jim', 'income': 93000}
+        {'age': 18, 'order': 2, 'name': 'Jim', 'income': 93000}
         >>> print PLOD(test).returnOneEntry(last=True)
         {'age': 19, 'order': 4, 'name': 'Bill', 'income': 29000}
 
@@ -1267,8 +1284,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
@@ -1300,8 +1317,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
@@ -1330,8 +1347,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
@@ -1353,8 +1370,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
@@ -1381,8 +1398,8 @@ class PLOD(object):
         Example of use:
 
         >>> test = [
-        ...    {"name": "Jim",   "age": 3 , "income": 93000, "order": 2},
-        ...    {"name": "Larry", "age": 3 ,                  "order": 3},
+        ...    {"name": "Jim",   "age": 18, "income": 93000, "order": 2},
+        ...    {"name": "Larry", "age": 18,                  "order": 3},
         ...    {"name": "Joe",   "age": 20, "income": 15000, "order": 1},
         ...    {"name": "Bill",  "age": 19, "income": 29000, "order": 4},
         ... ]
