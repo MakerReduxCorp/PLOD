@@ -69,6 +69,6 @@ Other Resources
 
 * `GitHub Repository <https://github.com/MakerReduxCorp/PLOD>`_
 * PyPI web site TBD
-* [Documentation](/docs/index.html)
-* [Early Overview Video](http://videocenter1.vtcstream.com/videos/video/3546/embed/?access_token=shr00000035466053201644252204311242298919605)
+* Documentation TBD
+* `Early Overview Video <http://videocenter1.vtcstream.com/videos/video/3546/embed/?access_token=shr00000035466053201644252204311242298919605)>`_
 
