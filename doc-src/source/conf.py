@@ -31,6 +31,7 @@ sys.path.insert(0, os.pardir)
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
+    'sphinxcontrib.restbuilder'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -330,3 +331,19 @@ epub_exclude_files = ['search.html']
 
 # If false, no index is generated.
 #epub_use_index = True
+
+# ------
+# RST STuff
+
+rst_file_suffix = '.rst'
+rst_link_suffix = ''
+rst_line_width = 200
+rst_indent = 4
+def rst_file_transform(docname):
+    if docname == 'index':
+        docname = 'home'
+    return docname.title() + rst_file_suffix
+def rst_link_transform(docname):
+    if docname == 'index':
+        return 'wiki'
+    return 'wiki/' + docname.title()

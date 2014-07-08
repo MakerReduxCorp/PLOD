@@ -3,7 +3,7 @@ PLOD Tutorial
 
 This is a tutorial to give a narrative description of how to use the PLOD class/library.
 
-BUT FIRST: What is a *List of Dictionaries?*
+BUT FIRST: Explaining *List of Dictionaries*
 --------------------------------------------
 
 If you are already an expert on Lists, Dictionaries, and their characteristics, feel free
