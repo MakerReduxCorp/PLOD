@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="PLOD 0.1.4working documentation" href="index.html" />
     <link rel="next" title="PLOD Library Reference" href="code.html" />
-    <link rel="prev" title="PLOD - Brief Introduction" href="readme_link.html" /> 
+    <link rel="prev" title="PLOD - Brief Introduction" href="readme.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,7 +38,7 @@
           <a href="code.html" title="PLOD Library Reference"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="readme_link.html" title="PLOD - Brief Introduction"
+          <a href="readme.html" title="PLOD - Brief Introduction"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">PLOD 0.1.4working documentation</a> &raquo;</li> 
       </ul>
@@ -48,17 +48,33 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">PLOD Tutorial</a><ul>
-<li><a class="reference internal" href="#but-first-explaining-list-of-dictionaries">BUT FIRST: Explaining <em>List of Dictionaries</em></a></li>
+<li><a class="reference internal" href="#but-first-explaining-list-of-dictionaries">BUT FIRST: Explaining <em>List of Dictionaries</em></a><ul>
+<li><a class="reference internal" href="#quick-primer-on-lists">Quick Primer on Lists</a></li>
+<li><a class="reference internal" href="#quick-primer-on-dictionaries">Quick Primer on Dictionaries</a></li>
+<li><a class="reference internal" href="#putting-them-together">Putting Them Together</a></li>
+<li><a class="reference internal" href="#not-so-simple-example">Not-so-simple Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loading-plod">Loading PLOD</a><ul>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+<li><a class="reference internal" href="#typical-use">Typical Use</a></li>
+<li><a class="reference internal" href="#classy-use">Classy Use</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#using-plod-to-filter-a-list">Using PLOD to Filter a List</a></li>
 <li><a class="reference internal" href="#using-plod-to-sort-and-renumber">Using PLOD to Sort and Renumber</a></li>
 <li><a class="reference internal" href="#returning-the-results">Returning the Results</a></li>
 <li><a class="reference internal" href="#playing-with-the-original-index">Playing With the Original Index</a></li>
+<li><a class="reference internal" href="#playing-with-list-like-things-such-as-classes">Playing with &#8220;List Like&#8221; things such as Classes</a><ul>
+<li><a class="reference internal" href="#typical-classes">Typical Classes</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="readme_link.html"
+  <p class="topless"><a href="readme.html"
                         title="previous chapter">PLOD - Brief Introduction</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="code.html"
@@ -96,6 +112,180 @@
 <h2>BUT FIRST: Explaining <em>List of Dictionaries</em><a class="headerlink" href="#but-first-explaining-list-of-dictionaries" title="Permalink to this headline">¶</a></h2>
 <p>If you are already an expert on Lists, Dictionaries, and their characteristics, feel free
 to skip to the next section. There is nothing new in this part.</p>
+<div class="section" id="quick-primer-on-lists">
+<h3>Quick Primer on Lists<a class="headerlink" href="#quick-primer-on-lists" title="Permalink to this headline">¶</a></h3>
+<p>A <em>list</em> is a sequential collection of items. In python, the items are seperated by commas and enclosed by matching square brackets. For example:</p>
+<blockquote>
+<div>fruits = [&#8220;bannana&#8221;, &#8220;cherry&#8221;, &#8220;lime&#8221;]</div></blockquote>
+<p>In the example, &#8220;bananna&#8221; is an item, &#8220;cherry&#8221; is an item, and &#8220;lime&#8221; is an item.</p>
+<p>List are ordered. So:</p>
+<blockquote>
+<div>more_fruits = [&#8220;cherry&#8221;, &#8220;bannana&#8221;, &#8220;lime&#8221;]</div></blockquote>
+<p>is a <strong>different</strong> list. Specifically, <em>fruits</em> and <em>more_fruits</em> have the items but a different order.</p>
+<p>In python, one can directly reference a item in the list by it&#8217;s index. Each item in the list is numbered starting with zero (0). On uses the square brackets directly with the list name to make that reference. For example:</p>
+<blockquote>
+<div>print(fruits[2])</div></blockquote>
+<p>This example would print &#8220;lime&#8221; as that is the item at index spot 2.</p>
+<p>So far, the <em>items</em> shown here have been strings. But they can pretty much be anything. They can be numbers, class instances, more lists, functions, and, of course, dictionaries...</p>
+</div>
+<div class="section" id="quick-primer-on-dictionaries">
+<h3>Quick Primer on Dictionaries<a class="headerlink" href="#quick-primer-on-dictionaries" title="Permalink to this headline">¶</a></h3>
+<p>A <em>dictionary</em> is collection of values referenced by a name. In python, the values are prefixed with a colon and the name of the value, called a <em>key</em>. The collection is
+enclused by matching curly brackets. For example:</p>
+<blockquote>
+<div>my_fruit = {&#8220;name&#8221;: &#8220;bannana&#8221;}</div></blockquote>
+<p>It&#8217;s a collection, so multiple values are possible. Each of them are seperated by comma. For example:</p>
+<blockquote>
+<div>my_fruit = {&#8220;name&#8221;: &#8220;bannana&#8221;, &#8220;color&#8221;: &#8220;yellow&#8221;, &#8220;rating&#8221;: 3}</div></blockquote>
+<p>So, in this example, <em>my_fruit</em> has a <em>name</em> of &#8220;bannana&#8221;, a <em>color</em> of &#8220;yellow&#8221;, and a <em>rating</em> of the number 3.</p>
+<p>Unlike lists, order is not important. So:</p>
+<blockquote>
+<div>other_fruit = {rating: 3, &#8220;name&#8221;: &#8220;bannana&#8221;, &#8220;color&#8221;: &#8220;yellow&#8221;}</div></blockquote>
+<p>contains the same elements. Specifically, they contain the same key/value pairs.</p>
+<p>In python, one can directly reference a value by using it&#8217;s key in a set of square brackets directly with the dictionary name. For example:</p>
+<blockquote>
+<div>print(my_fruit[&#8216;color&#8217;])</div></blockquote>
+<p>This example would print &#8220;yellow&#8221; as that is the value reference by key <em>color</em>.</p>
+<p>Similar to a list, a value in a dictionary is not limited to strings and number. They can also contain class instances, functions, lists and even other dictionaries.</p>
+</div>
+<div class="section" id="putting-them-together">
+<h3>Putting Them Together<a class="headerlink" href="#putting-them-together" title="Permalink to this headline">¶</a></h3>
+<p>Since an item in a list can be a dictionary, one can have a list of dictionaries. For
+example:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>grocery_list = [</dt>
+<dd>{&#8220;name&#8221;: &#8220;bannana&#8221;, qty: 8},
+{&#8220;name&#8221;: &#8220;can of beans&#8221;, qty: 1},
+{&#8220;name&#8221;: &#8220;milk&#8221;, qty: 2, size: &#8220;pint&#8221;}</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<p>To reference an of these items, one can simply chain the references together. Such as:</p>
+<blockquote>
+<div>a = grocery_list[1]
+print(a[&#8216;name&#8217;])</div></blockquote>
+<p>This example would print &#8220;can of beans&#8221; as that is the item at index 1, with the key of &#8216;name&#8217;. Or, even simpler:</p>
+<blockquote>
+<div>print(grocery_list[1][&#8216;name&#8217;])</div></blockquote>
+<p>does the same thing. One can also parse such a list. For example:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>for food in grocery_list:</dt>
+<dd>print food[&#8220;name&#8221;], food[&#8220;qty&#8221;]</dd>
+</dl>
+</div></blockquote>
+<p>would output:</p>
+<blockquote>
+<div>bannana 8
+can of beans 1
+milk 2</div></blockquote>
+<p>Or, one can use a list comprehension:</p>
+<blockquote>
+<div>print &#8220;&#8221;.join([food[&#8220;name&#8221;]+&#8221; &#8220;+food[&#8220;qty&#8221;]+&#8221;n&#8221; for food in grocery_list])</div></blockquote>
+<p>to output the exact same thing.</p>
+<p>(for more about list comprehensions, visit X)</p>
+</div>
+<div class="section" id="not-so-simple-example">
+<h3>Not-so-simple Example<a class="headerlink" href="#not-so-simple-example" title="Permalink to this headline">¶</a></h3>
+<p>Since lists can include dictionaries, and dictinoaries can include lists, one can come
+up with some fairly convoluted combinations. And, there is a place for these datastructures. An example:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>mailing_list = [</dt>
+<dd><dl class="first docutils">
+<dt>{</dt>
+<dd>&#8216;id&#8217;: 4323,
+&#8216;address&#8217;: { &#8220;street&#8221;: &#8220;123 Main St&#8221;, &#8220;city&#8221;: &#8220;Anytown&#8221;},
+&#8216;history&#8217;: [322, 392, 292, 437]</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div>&#8216;id&#8217;: 4338,
+&#8216;address&#8217;: { &#8220;street&#8221;: &#8220;653 Truul Dr&#8221;, &#8220;city&#8221;: &#8220;Chicago&#8221;},
+&#8216;history&#8217;: [22, 325, 234, 864]</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div>&#8216;id&#8217;: 4393,
+&#8216;address&#8217;: { &#8220;street&#8221;: &#8220;PO Box 8945&#8221;, &#8220;street2&#8221;: &#8220;32 Willow St&#8221;, &#8220;city&#8221;: &#8220;LA&#8221;},
+&#8216;history&#8217;: [99, 321, 874, 234]</div></blockquote>
+<p class="last">},</p>
+</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<p>As an example of getting data from this list, we want to know the <em>city</em> for <em>id</em> 4338:</p>
+<blockquote>
+<div>print mailing_list[1][&#8216;address&#8217;][&#8216;city&#8217;]</div></blockquote>
+<p>But, if one did not know <em>where</em> in the list <em>id</em> 4338 was:</p>
+<blockquote>
+<div>print [i[&#8216;address&#8217;][&#8216;city&#8217;] for i in mailing_list where i[&#8216;id&#8217;]==4338][0]</div></blockquote>
+<p>Or, if you will permit me to cheat in this tutorial, we could use PLOD:</p>
+<blockquote>
+<div>print PLOD(mailing_list).eq(&#8220;id&#8221;, 4338).returnValue([&#8220;address&#8221;, &#8220;city&#8221;])</div></blockquote>
+</div>
+</div>
+<div class="section" id="loading-plod">
+<h2>Loading PLOD<a class="headerlink" href="#loading-plod" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing">
+<h3>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h3>
+<p>The best way to install PLOD is using PIP:</p>
+<blockquote>
+<div>pip install PLOD</div></blockquote>
+<p>This will install the PLOD package from the PyPI library online.</p>
+</div>
+<div class="section" id="typical-use">
+<h3>Typical Use<a class="headerlink" href="#typical-use" title="Permalink to this headline">¶</a></h3>
+<p>There is only one element of interest in the PLOD package: the PLOD class. So, import
+that class:</p>
+<blockquote>
+<div>from PLOD import PLOD</div></blockquote>
+<p>Then, any place it is needed, invoke a PLOD instance by passing the list in as a parameter. Typically, this is composed of three steps:</p>
+<ol class="arabic simple">
+<li>Invoke PLOD</li>
+<li>Modify by chaining on methods.</li>
+<li>Use a &#8216;return&#8217; method</li>
+</ol>
+<p>An example:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>mailing_list = [</dt>
+<dd><dl class="first docutils">
+<dt>{</dt>
+<dd>&#8216;id&#8217;: 4323,
+&#8216;name&#8217;: &#8220;Joe Schmoe&#8221;,
+&#8216;address&#8217;: { &#8220;street&#8221;: &#8220;123 Main St&#8221;, &#8220;city&#8221;: &#8220;Anytown&#8221;},
+&#8216;history&#8217;: [322, 392, 292, 437]</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div>&#8216;id&#8217;: 4338,
+&#8216;name&#8217;: &#8220;Larry Zilch&#8221;,
+&#8216;address&#8217;: { &#8220;street&#8221;: &#8220;653 Truul Dr&#8221;, &#8220;city&#8221;: &#8220;Chicago&#8221;},
+&#8216;history&#8217;: [22, 325, 234, 864]</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div>&#8216;id&#8217;: 4393,
+&#8216;name&#8217;: &#8220;Brian Smatter&#8221;,
+&#8216;address&#8217;: { &#8220;street&#8221;: &#8220;PO Box 8945&#8221;, &#8220;street2&#8221;: &#8220;32 Willow St&#8221;, &#8220;city&#8221;: &#8220;LA&#8221;},
+&#8216;history&#8217;: [99, 321, 874, 234]</div></blockquote>
+<p class="last">},</p>
+</dd>
+</dl>
+<p>]</p>
+<p>the_name = PLOD(mailing_list).eq(&#8216;id&#8217;,4338).returnValue(&#8216;name&#8217;)</p>
+</div></blockquote>
+<p>In this example, <em>the_name</em> now contains &#8220;Larry Zilch&#8221;. The &#8216;eq&#8217; method (and many other filtering methods) are explained in the &#8216;Using PLOD to Filter a List&#8217;_ section. The &#8216;returnValue&#8217; (and other return methods) are explained in the &#8216;Returning the Results&#8217;_ section.</p>
+<p>For the remaing examples in this section, we will assume <em>mailing_list</em> remains.</p>
+</div>
+<div class="section" id="classy-use">
+<h3>Classy Use<a class="headerlink" href="#classy-use" title="Permalink to this headline">¶</a></h3>
+<p>TBD</p>
+</div>
 </div>
 <div class="section" id="using-plod-to-filter-a-list">
 <h2>Using PLOD to Filter a List<a class="headerlink" href="#using-plod-to-filter-a-list" title="Permalink to this headline">¶</a></h2>
@@ -108,45 +298,12 @@ to skip to the next section. There is nothing new in this part.</p>
 </div>
 <div class="section" id="playing-with-the-original-index">
 <h2>Playing With the Original Index<a class="headerlink" href="#playing-with-the-original-index" title="Permalink to this headline">¶</a></h2>
-<p>Increasingly, software is passing more complex data stores between machines and between processes. Examples include RESTful XML, JSON/MongoDB, Google protobuf, RabbitMQ, etc.</p>
-<p>These data stores can include lists of collections, and each collection can have many attributes/values. In Python, these are often internally represented as a list containing dictionaries. For example, if you needed to represent a list of fruits available for purchase:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>fruits = [</dt>
-<dd>{&#8220;name&#8221;: &#8220;bannana&#8221;, &#8220;color&#8221;: &#8220;yellow&#8221;, &#8220;qty&#8221;: 9,  &#8220;sizes&#8221;: [2, 2.4, 3]},
-{&#8220;name&#8221;: &#8220;cherry&#8221;,                     &#8220;qty&#8221;: 40, &#8220;sizes&#8221;: [3, 2, 9]},
-{&#8220;name&#8221;: &#8220;lime&#8221;,    &#8220;color&#8221;: &#8220;green&#8221;,  &#8220;qty&#8221;: 2,  &#8220;sizes&#8221;: [2]},</dd>
-</dl>
-<p>]</p>
-</div></blockquote>
-<p>One could, of course, pass such a structure into a SQL database such as MySQL or PostgreSQL for manipulation. But that can be overkill for a small amount of temporary data, especially when the infrastructure requirements are light and response time is critical. In that case, manipulating such a list might make more sense to do in-memory within Python itself.</p>
-<p>If it is simple enough, one could do so directly using Python. For example:</p>
-<blockquote>
-<div>abundant_fruit = [f for f in fruits if f[&#8216;qty&#8217;]&gt;5]</div></blockquote>
-<p>But, if the program you are writing does such manipulations regularly, and those manipulations are somewhat more complex, then PLOD might be worth using. To mimic the previous example, this time with PLOD:</p>
-<blockquote>
-<div>from PLOD import PLOD
-abundant_fruit = PLOD(fruit).gt(&#8216;qty&#8217;,5).returnList()</div></blockquote>
-<p>Or a more complex example:</p>
-<blockquote>
-<div>from PLOD import PLOD
-my_fruit = PLOD(fruit).sort(&#8220;color&#8221;).contains(&#8220;sizes&#8221;, [3]).renumber(&#8220;id&#8221;, insert=True).returnList()</div></blockquote>
-<p>Here the list is sorted by color (missing colors at the top), filtered to entries with a size 3, and renumbered with a new key called &#8220;id&#8221;.</p>
-<p>In general, one simply:</p>
-<ol class="arabic simple">
-<li>Creates an instance of the PLOD class.</li>
-<li>Chains together methods of the class to manipulate the list.</li>
-<li>Uses a &#8220;return&#8221; method to get the results you want.</li>
-</ol>
-<p>For example, to sort a list:</p>
-<blockquote>
-<div>from PLOD import PLOD
-my_list = PLOD(fruits).sort(&#8220;qty&#8221;).returnList()</div></blockquote>
-<p>Or, to get a string with comma-separated values with a filter:</p>
-<blockquote>
-<div>from PLOD import PLOD
-csv = PLOD(fruits).gt(&#8216;qty&#8217;, 1).returnCSV(keys=[&#8216;name&#8217;, &#8216;sizes&#8217;])</div></blockquote>
-<p>For more detailed information, please visit the [Documentation](/tbd).</p>
+</div>
+<div class="section" id="playing-with-list-like-things-such-as-classes">
+<h2>Playing with &#8220;List Like&#8221; things such as Classes<a class="headerlink" href="#playing-with-list-like-things-such-as-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typical-classes">
+<h3>Typical Classes<a class="headerlink" href="#typical-classes" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 
@@ -166,7 +323,7 @@ csv = PLOD(fruits).gt(&#8216;qty&#8217;, 1).returnCSV(keys=[&#8216;name&#8217;, 
           <a href="code.html" title="PLOD Library Reference"
              >next</a> |</li>
         <li class="right" >
-          <a href="readme_link.html" title="PLOD - Brief Introduction"
+          <a href="readme.html" title="PLOD - Brief Introduction"
              >previous</a> |</li>
         <li><a href="index.html">PLOD 0.1.4working documentation</a> &raquo;</li> 
       </ul>
