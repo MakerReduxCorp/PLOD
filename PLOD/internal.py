@@ -6,12 +6,6 @@
 #
     
 import types as typemod
-try:
-    import bson
-    bson_available = True
-except ImportError:
-    bson_available = False
-
     
 NOOP = -1  # 'NOOP' aka 'no operation' essentially means "always true"
 LESS = 0
@@ -156,6 +150,7 @@ def get_member(row, key):
 
     
 def do_op(field, op, value):
+    ''' used for comparisons '''
     if op==NOOP:
         return True
     if field==None:
@@ -169,20 +164,40 @@ def do_op(field, op, value):
         return (field < value)
     if op==LESSorEQUAL:
         return (field <= value)
-    if op==EQUAL:
-        if repr(type(field))=="<class 'bson.objectid.ObjectId'>":
-            if type(value) is typemod.StringType:
-                try:
-                    value = bson.ObjectId(value)
-                except:
-                    pass
-        return (field == value)
     if op==GREATERorEQUAL:
         return (field >= value)
     if op==GREATER:
         return (field > value)
+    # for the EQUAL and NOT_EQUAL conditions, additional factors are considered.
+    # for EQUAL,
+    #    if they don't match AND the types don't match,
+    #    then the STR of the field and value is also tried
+    if op==EQUAL:
+        if (field == value):
+            return True
+        if type(field)==type(value):
+            return False
+        try:
+            field = str(field)
+            value = str(value)
+            return (field == value)
+        except:
+            return False
+    # for NOT_EQUAL,
+    #    if they match, then report False
+    #    if they don't match AND the types don't match,
+    #       then the STR equivalents are also tried.
     if op==NOT_EQUAL:
-        return (field != value)
+        if (field == value):
+            return False
+        if type(field)==type(value):
+            return True
+        try:
+            field = str(field)
+            value = str(value)
+            return (field != value)
+        except:
+            return True
     return False        
     
 def get_index(table, field_name, op, value):

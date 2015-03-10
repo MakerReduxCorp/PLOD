@@ -2,15 +2,11 @@
 #
 # Pythonic List of Dictionary module/class (PLOD)
 #
-# Version 0.1.4working
+# Version 0.1.5
     
 import internal
 import types as typemod
-try:
-    import bson
-    bson_available = True
-except ImportError:
-    bson_available = False
+# import bson
 
 class PLOD(object):
     '''
@@ -1417,14 +1413,14 @@ if __name__ == "__main__":
     if False:
 
         my_list = [
-            {"name": "Joe",   "age": 82, "zip": {"zap": [0,2,65]}},
+            {"name": "Joe",   "age": 82, "id": ("5457e9a08c794657a382ffe6"), "zip": {"zap": [0,2,65]}},
             {"name": "Billy", "age": 22, "zip": {"zap": 65}},
             {"name": "Zam",   "age": 30, "zip": {"zap": [0,2,4]}},
             {"name": "Julio", "age": 30},
             {"name": "Bob",   "age": 19, "zip": {"zap": "ABabping"}}
         ]
 
-        final = PLOD(my_list).contains(["zip", "zap"], 65).returnList()
+        final = PLOD(my_list).eq("id", "5457e9a08chjkl").returnList()
         print PLOD(final).returnString()
 
     else:
