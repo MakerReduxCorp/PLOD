@@ -1209,7 +1209,10 @@ class PLOD(object):
 
     def returnOneIndex(self, last=False):
         '''Return the first origin index (integer) of the current list. That
-        index refers to it's placement in the original list of dictionaries."
+        index refers to it's placement in the original list of dictionaries.
+        
+        This is very useful when one wants to reference the original entry by
+        index.
 
         Example of use:
 
@@ -1228,7 +1231,7 @@ class PLOD(object):
            The last origin of the current list is returned rather than the first.
         :return:
            An integer representing the original placement of the first item in
-           the list.
+           the list. Returns None if the list is currently empty.
         '''
         if len(self.table)==0:
             return None
