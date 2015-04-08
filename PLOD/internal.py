@@ -270,32 +270,64 @@ def select(table, index_track, field_name, op, value, includeMissing):
     #index_track = result_index
     return (result, result_index)
 
-def is_first_lessor(row_one, row_two, key_field, none_greater=False, reverse=False):
-    missing_one_flag = not (get_value(row_one, key_field))
-    missing_two_flag = not (get_value(row_two, key_field))
-    if missing_one_flag:
-        if none_greater:
-            result = False
-        else:
-            result = True
+def compare_by_key(row_one, row_two, key_field, none_greater=False, reverse=False):
+    # LESS = 0
+    # EQUAL = 2
+    # GREATER = 4
+    # 
+    value_one = get_value(row_one, key_field)
+    value_two = get_value(row_two, key_field)
+    missing_one_flag = not value_one
+    missing_two_flag = not value_two
+    if missing_one_flag and missing_two_flag:
+        result = EQUAL
     else:
-        if missing_two_flag:
+        if missing_one_flag:
             if none_greater:
-                result = True
+                result = GREATER
             else:
-                result = False
+                result = LESS
         else:
-            if reverse:
-                # this subtle difference here is what makes the sorting
-                # algorithm "stable". that is, it only sorts values if a
-                # difference is seen, otherwise original order is left
-                # intact. (a reversed '<=' is a '>')
-                result = (get_value(row_one, key_field) <= get_value(row_two, key_field))
+            if missing_two_flag:
+                if none_greater:
+                    result = LESS
+                else:
+                    result = GREATER
             else:
-                result = (get_value(row_one, key_field) < get_value(row_two, key_field))
+                if value_one < value_two:
+                    result = LESS
+                elif value_one > value_two:
+                    result = GREATER
+                else:
+                    result = EQUAL
     if reverse:
-        result = not result
+        if result==GREATER:
+            result = LESS
+        elif result==LESS:
+            result = GREATER
     return result
+
+def is_first_lessor(row_one, row_two, key_field, none_greater=False, reverse=False):
+    # if not a list, make it one.
+    if not type(key_field) is list:
+        key_field = [key_field]
+    #
+    # roam the list until a non-equal condition found (or the list ends)
+    for one_key in key_field:
+        result = compare_by_key(row_one, row_two, one_key, none_greater=none_greater, reverse=reverse)
+        if result != EQUAL:
+            break
+    #
+    if result==LESS:
+        return True
+    # this subtle difference here is what makes the sorting
+    # algorithm "stable". that is, it only sorts values if a
+    # difference is seen, otherwise original order is left
+    # intact. (a reversed '<=' is a '>')
+    if (result==EQUAL):
+        return reverse
+    return False
+
 
 def list_match_any(source, value):
     if type(source) is typemod.ListType:

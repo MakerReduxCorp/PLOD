@@ -2,7 +2,7 @@
 #
 # Pythonic List of Dictionary module/class (PLOD)
 #
-# Version 0.1.5
+# Version 0.1.6
     
 import internal
 import types as typemod
@@ -467,12 +467,19 @@ class PLOD(object):
             {age: 19, income: 29000, name: 'Bill' , wigs: None     },
             {age: 18, income: 93000, name: 'Jim'  , wigs:        68}
         ]
+        >>> print PLOD(test).sort(["age", "income"]).returnString()
+        [
+            {age: 18, income: None , name: 'Larry', wigs: [3, 2, 9]},
+            {age: 18, income: 93000, name: 'Jim'  , wigs:        68},
+            {age: 19, income: 29000, name: 'Bill' , wigs: None     },
+            {age: 20, income: 15000, name: 'Joe'  , wigs: [1, 2, 3]}
+        ]
         
         .. versionadded:: 0.0.2
         
         :param key:
-           The dictionary key (or cascading list of keys) that should be the
-           bassis of the sorting.
+           A dictionary key (or a list of keys) that should be the
+           basis of the sorting.
         :param reverse:
            Defaults to False. If True, then list is sorted decrementally.
         :param none_greater:
@@ -1416,14 +1423,19 @@ if __name__ == "__main__":
     if False:
 
         my_list = [
-            {"name": "Joe",   "age": 82, "id": ("5457e9a08c794657a382ffe6"), "zip": {"zap": [0,2,65]}},
+            {"name": "Joe",   "age": 82, "zip": {"zap": [0,2,65]}},
             {"name": "Billy", "age": 22, "zip": {"zap": 65}},
             {"name": "Zam",   "age": 30, "zip": {"zap": [0,2,4]}},
             {"name": "Julio", "age": 30},
             {"name": "Bob",   "age": 19, "zip": {"zap": "ABabping"}}
         ]
 
-        final = PLOD(my_list).eq("id", "5457e9a08chjkl").returnList()
+        print "before:"
+        print PLOD(my_list).returnString()
+
+        final = PLOD(my_list).sort("age").returnList()
+        
+        print "after:"
         print PLOD(final).returnString()
 
     else:
