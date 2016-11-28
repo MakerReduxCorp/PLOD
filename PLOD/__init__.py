@@ -2,7 +2,7 @@
 #
 # Pythonic List of Dictionary module/class (PLOD)
 #
-# Version 0.1.6
+# Version 0.1.7
     
 import internal
 import types as typemod
