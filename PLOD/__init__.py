@@ -878,10 +878,10 @@ class PLOD(object):
     ##############################
 
     def returnList(self, limit=False):
-        '''Return a true list of dictionaries (and *not* a PLOD class).
+        '''Return a list of dictionaries (and *not* a PLOD class).
 
         The list returned maintains the 'types' of the original entries unless
-        another operation has explicity change them. For example, an 'upsert'
+        another operation has explicity changed them. For example, an 'upsert'
         replacement of an entry.
 
         Example of use:
@@ -911,6 +911,23 @@ class PLOD(object):
             if len(self.table)>i:
                 result.append(self.table[i])
         return result
+
+    def returnLOD(self, limit=False):
+        '''Return a TRUE list of dictionaries (and *not* a PLOD class).
+
+        The entries are modified if the original list was not already a list of
+        dictionaries. So, for example, a list of objects would be returned as
+        an interpreted list of dictionaries instead.
+        '''
+
+        if limit==False:
+            limit = len(self.table)
+        result = []
+        if limit:
+            for i in range(limit):
+                result.append(internal.convert_to_dict(self.table[i]))
+        return result
+
 
     def returnString(self, limit=False, omitBrackets=False, executable=False, honorMissing=False):
         '''Return a string containing the list of dictionaries in easy

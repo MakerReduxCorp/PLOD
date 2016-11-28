@@ -6,6 +6,7 @@
 #
     
 import types as typemod
+from inspect import getmembers
     
 NOOP = -1  # 'NOOP' aka 'no operation' essentially means "always true"
 LESS = 0
@@ -26,8 +27,10 @@ def convert_to_dict(item):
     Otherwise, it attempts to interpret it. So far, this routine can handle:
     
     * a class, function, or anything with a .__dict__ entry
-    * a mongoEngine document (a class for MongoDb handling)
+    * a legacy mongoEngine document (a class for MongoDb handling)
     * a list (index positions are used as keys)
+    * a generic object that is iterable
+    * a generic object with members
 
     .. versionadded:: 0.0.4
 
@@ -52,27 +55,82 @@ def convert_to_dict(item):
         return item.__dict__['_data']
     elif actual_type=="class":
         return item.__dict__
+    elif actual_type=="iterable_dict":
+        # for a 'iterable_dict' create a real dictionary for a ALMOST-dict object.
+        d = {}
+        for key in item: # NO, you can't use iteritems(). The method might not exist.
+            d[key] = item[key]
+        return d
+    elif actual_type=="object":
+        tuples = getmembers(item)
+        d = {}
+        for (key, value) in tuples:
+            d[key] = value
+        return d
     return {}
-    
+
+# perhaps we should detect less and demand a parameter about type?
 def detect_type(item):
     # possible return values:
-    # 'dict', 'list', 'mongoengine', 'class'
+    # 'dict', 'list', 'mongoengine'(legacy), 'class', 'object'
     # or 'unknown'
     if type(item) is typemod.DictType:
         return "dict"
     if type(item) is typemod.ListType:
         return "list"
+    # try to iterate
+    if hasattr(item, '__iter__'):
+        type_so_far = "list"
+        if hasattr(item, '__getitem__'):
+            try:
+                first_key = item.__iter__().next()
+                first_value = item.__getitem__(first_key)
+                type_so_far = "iterable_dict"
+                # we now know we have a basic dict. But does it fully support
+                # the dict class methods?
+                if hasattr(item, '__contains__'):
+                    if hasattr(item, '__delitem__'):
+                        if hasattr(item, 'iteritems'):
+                            if hasattr(item, 'iterkeys'):
+                                if hasattr(item, '__len__'):
+                                    type_so_far = "dict"
+            except Exception:
+                pass
+        return type_so_far
+    # try a 'class-like' __dict__
     try:
         temp = item.__dict__
     except AttributeError:
-        return "unknown"
-    if '_data' in temp:
-        try:
-            if "mongoengine.base" in str(item.__metaclass__):
-                return "mongoengine"
-        except:
-            pass
-    return "class"
+        temp = False
+    if temp:
+        # but first try for a legacy mongoengine
+        if '_data' in temp:
+            try:
+                if "mongoengine.base" in str(item.__metaclass__):
+                    return "mongoengine"
+            except:
+                pass
+        return "class"
+    # try to grab the members of a generic object
+    try:
+        tuples = getmembers(item)
+        if tuples:
+            return "object"
+    except Exception:
+        pass
+    return "unknown"
+
+def detect_list(something):
+    if type(something) is typemod.ListType:
+        return True
+    elif hasattr(something, '__iter__'):
+        return True
+    return False
+
+def make_list(something):
+    if detect_list(something):
+        return something
+    return [something]
 
 def dict_crawl(entry, key):
     ''' returns a triple tuple representing the location of the key/key-list.
@@ -80,10 +138,7 @@ def dict_crawl(entry, key):
     If unable to locate the key, then (None, None, None) is returned.
     '''
     value = None
-    if type(key) is typemod.ListType:
-        key_list = key
-    else:
-        key_list = [key]
+    key_list = make_list(key)
     try:
         result = None
         success_flag = True
@@ -106,12 +161,17 @@ def dict_crawl(entry, key):
                     temp = temp[next_key]
                 else:
                     break
+            elif actual_type=="iterable_dict":
+                if next_key in convert_to_dict(temp): # 'contains' method might not be there
+                    temp = temp[next_key]
+                else:
+                    break
             elif actual_type=="list":
                 if next_key in temp:
                     temp = temp[next_key]
                 else:
                     break
-            else:
+            else:  ## I'm unsure we can really 'crawl' an 'object'
                 break
         else:
             return (parent, key_list[-1], temp)
@@ -223,7 +283,7 @@ def get_value(row, field_name):
     '''
     result = None
     dict_row = convert_to_dict(row)
-    if type(field_name) is typemod.ListType:
+    if detect_list(field_name):
         temp = row
         for field in field_name:
             dict_temp = convert_to_dict(temp)
@@ -234,7 +294,7 @@ def get_value(row, field_name):
     return result
     
 def detect_fields(field_name, row):
-    if type(field_name) is typemod.ListType:
+    if detect_list(field_name):
         ptr = row
         for field in field_name:
             # print field, repr(ptr)
@@ -330,9 +390,9 @@ def is_first_lessor(row_one, row_two, key_field, none_greater=False, reverse=Fal
 
 
 def list_match_any(source, value):
-    if type(source) is typemod.ListType:
+    if detect_list(source):
         for sub_source in source:
-            if type(value) is typemod.ListType:
+            if detect_list(value):
                 # list vs list
                 for sub_val in value:
                     if do_op(sub_source, EQUAL, sub_val):
@@ -343,7 +403,7 @@ def list_match_any(source, value):
                     return True
         return False           
     else:
-        if type(value) is typemod.ListType:
+        if detect_list(value):
             # non-list vs list
             for sub_val in value:
                 if do_op(source, EQUAL, sub_val):
@@ -356,9 +416,9 @@ def list_match_any(source, value):
 
 def list_match_all(source, value):
     success = True
-    if type(value) is typemod.ListType:
+    if detect_list(value):
         for sub_val in value:
-            if type(source) is typemod.ListType:
+            if detect_list(source):
                 # list vs list
                 entry_found = False
                 for sub_source in source:
@@ -371,7 +431,7 @@ def list_match_all(source, value):
                 if not do_op(source, EQUAL, sub_val):
                     success = False
     else:
-        if type(source) is typemod.ListType:
+        if detect_list(source):
             # list vs non-list
             success = False
             for sub_source in source:
